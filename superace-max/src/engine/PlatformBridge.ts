@@ -112,6 +112,18 @@ class PlatformBridge {
   }
 
   /**
+   * Sync authoritative balance to parent platform for UI display.
+   * The spin endpoint already handled settlement — this is just for UI sync.
+   */
+  syncBalance(balance: number) {
+    this.balance = balance;
+    window.parent.postMessage(
+      { type: "BALANCE_UPDATE", balance },
+      window.location.origin
+    );
+  }
+
+  /**
    * Request current balance from the parent.
    * Returns a promise that resolves when the parent responds.
    */

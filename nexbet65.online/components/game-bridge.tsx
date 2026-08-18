@@ -10,23 +10,25 @@ import { useWallet } from "@/lib/wallet-store";
  * This component:
  *   1. Generates a session token when the iframe loads
  *   2. Sends the token to the iframe via postMessage
- *   3. Listens for BET_PLACED and WIN_RECEIVED from the game
- *   4. Calls /api/game/settle to update the ledger
- *   5. Sends BALANCE_UPDATE back to the iframe
- *   6. Refreshes the platform wallet sidebar in real-time
+ *   3. Listens for BALANCE_UPDATE from the game (authoritative balance from spin endpoint)
+ *   4. Refreshes the platform wallet sidebar in real-time
+ *
+ * Settlement flow:
+ *   The game iframe calls /api/superace/spin directly, which handles
+ *   bet debit + win credit atomically. The bridge is only used for
+ *   balance sync and session management — NOT for settlement.
  */
 
 type BridgeMessage =
   | { type: "GAME_READY" }
-  | { type: "BET_PLACED"; amount: number; ref: string }
-  | { type: "WIN_RECEIVED"; amount: number; ref: string }
+  | { type: "BALANCE_UPDATE"; balance: number }
   | { type: "REQUEST_BALANCE" };
 
 export function GameBridge({ gameId = "superace" }: { gameId?: string }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [token, setToken] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
-  const { balance, refresh } = useWallet();
+  const { refresh } = useWallet();
 
   // Generate session token on mount
   useEffect(() => {
@@ -80,97 +82,20 @@ export function GameBridge({ gameId = "superace" }: { gameId?: string }) {
           sendTokenToIframe();
           break;
 
-        case "BET_PLACED": {
-          // Game placed a bet — settle it server-side
-          try {
-            const res = await fetch("/api/game/settle", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                token,
-                type: "BET",
-                amount: data.amount,
-                ref: data.ref,
-              }),
-            });
-            const result = await res.json();
-
-            if (result.success) {
-              // Send updated balance to the game
-              sendBalanceToIframe(result.newBalance);
-              // Also refresh the platform wallet sidebar
-              await refresh();
-            } else {
-              console.error("Bet settle failed:", result.error);
-              // Send error back to game
-              sendErrorToIframe(result.error);
-            }
-          } catch (err) {
-            console.error("Settle API error:", err);
-            sendErrorToIframe("Network error");
-          }
+        case "BALANCE_UPDATE":
+          // Game reports its authoritative balance (from spin endpoint)
+          // Refresh the platform wallet sidebar
+          await refresh();
           break;
-        }
-
-        case "WIN_RECEIVED": {
-          // Game won — credit it server-side
-          try {
-            const res = await fetch("/api/game/settle", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                token,
-                type: "WIN",
-                amount: data.amount,
-                ref: data.ref,
-              }),
-            });
-            const result = await res.json();
-
-            if (result.success) {
-              sendBalanceToIframe(result.newBalance);
-              await refresh();
-            } else {
-              console.error("Win settle failed:", result.error);
-            }
-          } catch (err) {
-            console.error("Settle API error:", err);
-          }
-          break;
-        }
 
         case "REQUEST_BALANCE":
           // Game requested current balance
-          try {
-            const res = await fetch("/api/wallet", { cache: "no-store" });
-            const data = await res.json();
-            if (typeof data.balance === "number") {
-              sendBalanceToIframe(data.balance);
-            }
-          } catch {
-            // Ignore
-          }
+          await refresh();
           break;
       }
     },
     [token, sendTokenToIframe, refresh]
   );
-
-  const sendBalanceToIframe = useCallback((newBalance: number) => {
-    if (!iframeRef.current?.contentWindow) return;
-    iframeRef.current.contentWindow.postMessage(
-      { type: "BALANCE_UPDATE", balance: newBalance },
-      window.location.origin
-    );
-  }, []);
-
-  const sendErrorToIframe = useCallback((error: string) => {
-    if (!iframeRef.current?.contentWindow) return;
-    iframeRef.current.contentWindow.postMessage(
-      { type: "SETTLE_ERROR", error },
-      window.location.origin
-    );
-  }, []);
 
   // Listen for postMessage events
   useEffect(() => {

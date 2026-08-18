@@ -115,7 +115,7 @@ export async function executeSpin(
   sound.spinStart();
   useGameStore.getState().setSpinningColumns([true, true, true, true, true]);
 
-  // Debit + jackpot contribution
+  // Optimistic debit + jackpot contribution (visual only — server handles actual wallet)
   if (!fs.isActive && spinCost > 0) {
     useWalletStore.getState().optimisticDebit(spinCost);
     useWalletStore.getState().setTotalBetsPlaced(Number((defaultBet + spinCost).toFixed(2)));
@@ -123,11 +123,6 @@ export async function executeSpin(
     useJackpotStore.getState().incrementBy(jackpotContrib);
     useJackpotStore.getState().setHasIncrement(true);
     deferShakeClear('', 700, activeDelaysRef);
-
-    // Notify parent platform about the bet (postMessage bridge)
-    if (bridge.hasSession()) {
-      bridge.betPlaced(spinCost, `bet_${currentSpinIdx}_${Date.now()}`);
-    }
   }
 
   // ─── API call ────────────────────────────────────────────────────────────
@@ -275,11 +270,6 @@ export async function executeSpin(
     useWalletStore.getState().setIsBalancePulsing(true);
     deferShakeClear('', 1500, activeDelaysRef);
 
-    // Notify parent platform about the win (postMessage bridge)
-    if (bridge.hasSession()) {
-      bridge.winReceived(spinResult.totalWin, `win_${currentSpinIdx}_${Date.now()}`);
-    }
-
     if (fs.isActive) {
       useGameStore.getState().setFreeSpinsAccumulatedWin(
         Number((fs.accumulatedWin + spinResult.totalWin).toFixed(2))
@@ -367,6 +357,13 @@ export async function executeSpin(
   // ─── Done ────────────────────────────────────────────────────────────────
   useGameStore.getState().setIsSpinning(false);
   isSpinningRef.current = false;
+
+  // Sync authoritative balance to parent platform (no settlement — spin endpoint already handled wallet)
+  if (bridge.hasSession()) {
+    const authoritativeBalance = useWalletStore.getState().balance;
+    bridge.syncBalance(authoritativeBalance);
+  }
+
   track('spin_complete', {
     totalWin: spinResult.totalWin,
     cascades: cascadeVisuals.length,
