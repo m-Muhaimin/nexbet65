@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifySession } from "@/lib/auth";
 import { sessionCookieFromRequest } from "@/lib/session";
 
-const PROTECTED_PREFIXES = ["/lobby", "/games", "/profile"];
+const PROTECTED_PREFIXES = ["/lobby", "/games"];
 const PUBLIC_ROUTES = ["/register", "/sign-in"];
+const PUBLIC_ASSET_PREFIXES = ["/assets/"];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -13,7 +14,8 @@ export async function middleware(req: NextRequest) {
 
   const isProtected = PROTECTED_PREFIXES.some(
     (p) => pathname === p || pathname.startsWith(p + "/")
-  );
+  ) && !pathname.match(/\.(js|css|png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|eot)$/);
+
   const isPublicAuth = PUBLIC_ROUTES.some(
     (p) => pathname === p || pathname.startsWith(p + "/")
   );
