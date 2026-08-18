@@ -54,7 +54,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = React.memo(({
       {/* 2. Center: Logo, Switcher, and Tickers in a Unified Layout */}
       <div className="flex flex-col items-center justify-center min-w-0 flex-1">
         {/* Mode Toggle Switcher - More compact */}
-        <div className="flex items-center p-0.5 bg-[#060a12] border border-[#22304a] rounded-full shadow-inner mb-1 scale-75 sm:scale-90">
+        <div className={`flex items-center p-0.5 bg-[#060a12] border border-[#22304a] rounded-full shadow-inner mb-1 scale-75 sm:scale-90 ${isFreeSpinsActive ? 'opacity-40 pointer-events-none' : ''}`}>
           <button
             type="button"
             onClick={() => onToggleGameMode('classic')}

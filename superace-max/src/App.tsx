@@ -165,7 +165,7 @@ export default function App() {
         onOpenVIP={() => useUIStore.getState().setModal('isVIPClubOpen', true)}
         gameMode={game.gameMode}
         onToggleGameMode={(mode) => {
-          if (game.isSpinning) return;
+          if (game.isSpinning || freeSpins.isActive) return;
           useGameStore.getState().setGameMode(mode);
           saveGameState({ gameMode: mode });
           sound.buttonClick();
