@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import { HeaderBar } from './components/HeaderBar';
 import { MultiplierBar } from './components/MultiplierBar';
-import { ReelGrid } from './components/ReelGrid';
+import { ReelGridPhaser } from './components/ReelGridPhaser';
+import { BlurFX } from './components/BlurFX';
 import { ControlBar } from './components/ControlBar';
 import { FooterBar } from './components/FooterBar';
 import { NavigationDrawer } from './components/NavigationDrawer';
@@ -187,22 +188,25 @@ export default function App() {
         isOverdriveActive={game.isOverdriveActive}
       />
 
-      <ReelGrid
-        grid={game.grid}
-        spinningColumns={game.spinningColumns}
-        waysHits={game.currentWaysHits}
-        isSpinning={game.isSpinning}
-        spinCount={game.spinCount}
-        cascadeDepth={game.cascadeDepth}
-        comboMultiplier={game.comboMultiplier}
-        isFreeSpinsActive={freeSpins.isActive}
-        activeRippleColumns={game.ripple.columns}
-        activeRippleCells={game.ripple.cells}
-        rippleTriggerKey={game.ripple.triggerKey}
-        lastSpinWin={wallet.lastSpinWin}
-        gameMode={game.gameMode}
-        onQuickStop={handleQuickStop}
-      />
+      <div className="relative flex-1 min-h-0">
+        <ReelGridPhaser
+          grid={game.grid}
+          spinningColumns={game.spinningColumns}
+          waysHits={game.currentWaysHits}
+          isSpinning={game.isSpinning}
+          spinCount={game.spinCount}
+          cascadeDepth={game.cascadeDepth}
+          comboMultiplier={game.comboMultiplier}
+          isFreeSpinsActive={freeSpins.isActive}
+          activeRippleColumns={game.ripple.columns}
+          activeRippleCells={game.ripple.cells}
+          rippleTriggerKey={game.ripple.triggerKey}
+          lastSpinWin={wallet.lastSpinWin}
+          gameMode={game.gameMode}
+          onQuickStop={handleQuickStop}
+        />
+        <BlurFX isActive={game.isSpinning} />
+      </div>
 
       <ControlBar
         balance={wallet.balance}
