@@ -3,33 +3,26 @@ import type { GridCell, SymbolType } from '../../types';
 
 const COLS = 5;
 const ROWS = 4;
-const SYMBOL_SIZE = 96;
+const CELL_SIZE = 96;
 const CELL_GAP = 4;
-const REEL_HEIGHT = ROWS * (SYMBOL_SIZE + CELL_GAP);
-const REEL_WIDTH = COLS * (SYMBOL_SIZE + CELL_GAP);
+const GRID_W = COLS * (CELL_SIZE + CELL_GAP) - CELL_GAP; // 476
+const GRID_H = ROWS * (CELL_SIZE + CELL_GAP) - CELL_GAP; // 380
+const GRID_PAD = 6;
+const CANVAS_W = GRID_W + GRID_PAD * 2; // 488
+const CANVAS_H = GRID_H + GRID_PAD * 2; // 392
 
 const SYMBOL_KEYS: SymbolType[] = ['A', 'K', 'Q', 'J', 'S', 'G', 'JK', 'SC'];
 
 const SYMBOL_TO_KEY: Record<SymbolType, string> = {
-  A: 'sym_A',
-  K: 'sym_K',
-  Q: 'sym_Q',
-  J: 'sym_J',
-  S: 'sym_S',
-  G: 'sym_G',
-  JK: 'sym_JK',
-  SC: 'sym_SC',
+  A: 'sym_A', K: 'sym_K', Q: 'sym_Q', J: 'sym_J',
+  S: 'sym_S', G: 'sym_G', JK: 'sym_JK', SC: 'sym_SC',
 };
 
 const SYMBOL_TO_PNG: Record<SymbolType, string> = {
-  A: '/assets/symbols/A.png',
-  K: '/assets/symbols/K.png',
-  Q: '/assets/symbols/Q.png',
-  J: '/assets/symbols/J.png',
-  S: '/assets/symbols/clubs.png',
-  G: '/assets/symbols/G.png',
-  JK: '/assets/symbols/JK.png',
-  SC: '/assets/symbols/SC.png',
+  A: '/assets/symbols/A.png', K: '/assets/symbols/K.png',
+  Q: '/assets/symbols/Q.png', J: '/assets/symbols/J.png',
+  S: '/assets/symbols/clubs.png', G: '/assets/symbols/G.png',
+  JK: '/assets/symbols/JK.png', SC: '/assets/symbols/SC.png',
 };
 
 interface CellSprite {
@@ -45,11 +38,17 @@ export interface SpinOptions {
   expandedJokerCols?: number[];
 }
 
+function cellX(col: number): number {
+  return GRID_PAD + col * (CELL_SIZE + CELL_GAP) + CELL_SIZE / 2;
+}
+
+function cellY(row: number): number {
+  return GRID_PAD + row * (CELL_SIZE + CELL_GAP) + CELL_SIZE / 2;
+}
+
 export class SlotMachineScene extends Phaser.Scene {
   private cellSprites: CellSprite[][] = [];
-  private gridOriginX = 0;
-  private gridOriginY = 0;
-  private blurOverlay!: Phaser.GameObjects.TileSprite;
+  private blurOverlay!: Phaser.GameObjects.Image;
   private isSpinning = false;
   private blurFrame = 0;
   private blurTimer?: Phaser.Time.TimerEvent;
@@ -62,46 +61,35 @@ export class SlotMachineScene extends Phaser.Scene {
     for (const sym of SYMBOL_KEYS) {
       this.load.image(SYMBOL_TO_KEY[sym], SYMBOL_TO_PNG[sym]);
     }
-    for (let i = 0; i <= 8; i++) {
-      this.load.image(`spin_btn_${i}`, `/assets/ui/spin-btn_${String(i).padStart(3, '0')}.png`);
-    }
     for (let i = 0; i <= 7; i++) {
       this.load.image(`blur_${i}`, `/assets/fx/blur_${String(i).padStart(3, '0')}.png`);
     }
   }
 
   create() {
-    this.gridOriginX = SYMBOL_SIZE / 2;
-    this.gridOriginY = SYMBOL_SIZE / 2;
-
-    this.blurOverlay = this.add.tileSprite(
-      this.scale.width / 2,
-      this.scale.height / 2,
-      REEL_WIDTH + 8,
-      REEL_HEIGHT + 8,
-      'blur_0'
-    ).setOrigin(0.5).setAlpha(0).setDepth(10);
-
     for (let col = 0; col < COLS; col++) {
       this.cellSprites[col] = [];
       for (let row = 0; row < ROWS; row++) {
-        const x = this.gridOriginX + col * (SYMBOL_SIZE + CELL_GAP);
-        const y = this.gridOriginY + row * (SYMBOL_SIZE + CELL_GAP);
+        const x = cellX(col);
+        const y = cellY(row);
 
         const glow = this.add.image(x, y, 'sym_A')
-          .setDisplaySize(SYMBOL_SIZE + 12, SYMBOL_SIZE + 12)
+          .setDisplaySize(CELL_SIZE + 12, CELL_SIZE + 12)
           .setAlpha(0)
           .setDepth(1);
 
         const img = this.add.image(x, y, 'sym_A')
-          .setDisplaySize(SYMBOL_SIZE, SYMBOL_SIZE)
+          .setDisplaySize(CELL_SIZE, CELL_SIZE)
           .setDepth(2);
 
         this.cellSprites[col][row] = { col, row, image: img, glowImage: glow };
       }
     }
 
-    this.blurOverlay.setDepth(50);
+    this.blurOverlay = this.add.image(CANVAS_W / 2, CANVAS_H / 2, 'blur_0')
+      .setDisplaySize(CANVAS_W, CANVAS_H)
+      .setAlpha(0)
+      .setDepth(50);
   }
 
   setGrid(grid: GridCell[][]) {
@@ -114,14 +102,15 @@ export class SlotMachineScene extends Phaser.Scene {
 
         const key = SYMBOL_TO_KEY[cell.symbol] || 'sym_A';
         sprite.image.setTexture(key);
-        sprite.image.setDisplaySize(SYMBOL_SIZE, SYMBOL_SIZE);
-        sprite.image.setAlpha(1);
-        sprite.image.setScale(1);
+        sprite.image.setDisplaySize(CELL_SIZE, CELL_SIZE);
+        sprite.image.setPosition(cellX(col), cellY(row));
+        sprite.image.setAlpha(1).setScale(1);
 
         if (sprite.glowImage) {
+          sprite.glowImage.setPosition(cellX(col), cellY(row));
           if (cell.isGoldenCard || cell.isGoldenJoker) {
             sprite.glowImage.setTexture(key);
-            sprite.glowImage.setDisplaySize(SYMBOL_SIZE + 12, SYMBOL_SIZE + 12);
+            sprite.glowImage.setDisplaySize(CELL_SIZE + 12, CELL_SIZE + 12);
             sprite.glowImage.setAlpha(0.5);
           } else {
             sprite.glowImage.setAlpha(0);
@@ -137,114 +126,102 @@ export class SlotMachineScene extends Phaser.Scene {
 
     this.startBlur();
 
+    // Phase 1: Symbols slide down and fade
     for (let col = 0; col < COLS; col++) {
-      const staggerDelay = col * 120;
-
+      const staggerDelay = col * 100;
       this.time.delayedCall(staggerDelay, () => {
         for (let row = 0; row < ROWS; row++) {
           const sprite = this.cellSprites[col]?.[row];
           if (!sprite) continue;
+          const targetY = cellY(row) + 160;
           this.tweens.add({
             targets: sprite.image,
-            y: sprite.image.y + 200,
+            y: targetY,
             alpha: 0,
-            duration: 200,
+            duration: 180,
             ease: 'Power2',
           });
           if (sprite.glowImage) {
-            this.tweens.add({
-              targets: sprite.glowImage,
-              alpha: 0,
-              duration: 200,
-            });
+            this.tweens.add({ targets: sprite.glowImage, alpha: 0, duration: 180 });
           }
         }
       });
     }
 
-    await this.delay(200 + COLS * 120);
+    await this.delay(180 + COLS * 100);
 
+    // Phase 2: Set new grid
     this.setGrid(options.grid);
 
+    // Phase 3: Symbols drop in from above with stagger + bounce
     for (let col = 0; col < COLS; col++) {
-      const stopDelay = (COLS - 1 - col) * 150 + 100;
-
+      const stopDelay = col * 120;
       this.time.delayedCall(stopDelay, () => {
         for (let row = 0; row < ROWS; row++) {
           const sprite = this.cellSprites[col]?.[row];
           if (!sprite) continue;
-
-          const finalY = this.gridOriginY + row * (SYMBOL_SIZE + CELL_GAP);
-          sprite.image.y = finalY - 200;
+          const finalY = cellY(row);
+          sprite.image.y = finalY - 160;
           sprite.image.alpha = 0;
-          sprite.image.setScale(1);
 
           this.tweens.add({
             targets: sprite.image,
             y: finalY,
             alpha: 1,
-            duration: 300,
+            duration: 280,
             ease: 'Bounce.easeOut',
           });
 
           if (sprite.glowImage) {
             sprite.glowImage.y = finalY;
-            this.tweens.add({
-              targets: sprite.glowImage,
-              alpha: 0.5,
-              duration: 300,
-            });
+            if (sprite.image.texture.key !== 'sym_A' &&
+                (options.grid[col]?.[row]?.isGoldenCard || options.grid[col]?.[row]?.isGoldenJoker)) {
+              this.tweens.add({
+                targets: sprite.glowImage,
+                alpha: 0.5,
+                duration: 280,
+              });
+            }
           }
         }
 
-        this.tweens.add({
-          targets: this.blurOverlay,
-          alpha: 0,
-          duration: 100,
-          onComplete: () => {
-            this.stopBlur();
-          },
-        });
+        // Fade blur on last column stop
+        if (col === COLS - 1) {
+          this.tweens.add({
+            targets: this.blurOverlay,
+            alpha: 0,
+            duration: 120,
+            onComplete: () => this.stopBlur(),
+          });
+        }
       });
     }
 
-    await this.delay(300 + COLS * 150 + 300);
-
+    await this.delay(280 + COLS * 120 + 100);
     this.isSpinning = false;
   }
 
   highlightWinningCells(cellIds: string[]) {
     for (const sprite of this.cellSprites.flat()) {
       if (sprite.glowImage) {
-        this.tweens.add({
-          targets: sprite.glowImage,
-          alpha: 0,
-          duration: 100,
-        });
+        this.tweens.add({ targets: sprite.glowImage, alpha: 0, duration: 100 });
       }
     }
 
-    for (let col = 0; col < COLS; col++) {
-      for (let row = 0; row < ROWS; row++) {
-        const sprite = this.cellSprites[col]?.[row];
-        if (!sprite) continue;
-        const cellId = `cell-${col}-${row}`;
-        if (cellIds.includes(cellId)) {
-          if (sprite.glowImage) {
-            sprite.glowImage.setTexture(sprite.image.texture.key);
-            sprite.glowImage.setDisplaySize(SYMBOL_SIZE + 12, SYMBOL_SIZE + 12);
-            sprite.glowImage.setAlpha(0.8);
-          }
-          this.tweens.add({
-            targets: sprite.image,
-            scaleX: 1.15,
-            scaleY: 1.15,
-            duration: 400,
-            yoyo: true,
-            repeat: -1,
-            ease: 'Sine.easeInOut',
-          });
+    for (const sprite of this.cellSprites.flat()) {
+      const cellId = `${sprite.col}:${sprite.row}`;
+      if (cellIds.includes(cellId)) {
+        if (sprite.glowImage) {
+          sprite.glowImage.setTexture(sprite.image.texture.key);
+          sprite.glowImage.setDisplaySize(CELL_SIZE + 12, CELL_SIZE + 12);
+          sprite.glowImage.setAlpha(0.8);
         }
+        this.tweens.add({
+          targets: sprite.image,
+          scaleX: 1.12, scaleY: 1.12,
+          duration: 350, yoyo: true, repeat: -1,
+          ease: 'Sine.easeInOut',
+        });
       }
     }
   }
@@ -262,9 +239,9 @@ export class SlotMachineScene extends Phaser.Scene {
 
   async playCascade(grids: GridCell[][][]): Promise<void> {
     for (const grid of grids) {
-      await this.delay(350);
+      await this.delay(300);
       this.setGrid(grid);
-      await this.delay(200);
+      await this.delay(180);
     }
   }
 
@@ -273,30 +250,25 @@ export class SlotMachineScene extends Phaser.Scene {
       for (let row = 0; row < ROWS; row++) {
         const sprite = this.cellSprites[col]?.[row];
         if (!sprite) continue;
-
         const oldCell = oldGrid[col]?.[row];
         const newCell = newGrid[col]?.[row];
-
         if (!oldCell || !newCell) continue;
         if (oldCell.symbol === newCell.symbol) continue;
 
         const key = SYMBOL_TO_KEY[newCell.symbol] || 'sym_A';
         sprite.image.setTexture(key);
-        sprite.image.setDisplaySize(SYMBOL_SIZE, SYMBOL_SIZE);
+        sprite.image.setDisplaySize(CELL_SIZE, CELL_SIZE);
 
         this.tweens.add({
           targets: sprite.image,
-          scaleY: 0.3,
-          duration: 120,
-          ease: 'Power2',
+          scaleY: 0.2, duration: 100, ease: 'Power2',
           onComplete: () => {
-            sprite.image.setScale(1, 1);
-            sprite.image.y = this.gridOriginY + row * (SYMBOL_SIZE + CELL_GAP);
+            sprite.image.setScale(1);
+            sprite.image.y = cellY(row);
             this.tweens.add({
               targets: sprite.image,
-              y: sprite.image.y,
-              duration: 300,
-              ease: 'Bounce.easeOut',
+              y: cellY(row),
+              duration: 260, ease: 'Bounce.easeOut',
             });
           },
         });
@@ -304,7 +276,7 @@ export class SlotMachineScene extends Phaser.Scene {
         if (sprite.glowImage) {
           if (newCell.isGoldenCard || newCell.isGoldenJoker) {
             sprite.glowImage.setTexture(key);
-            sprite.glowImage.setDisplaySize(SYMBOL_SIZE + 12, SYMBOL_SIZE + 12);
+            sprite.glowImage.setDisplaySize(CELL_SIZE + 12, CELL_SIZE + 12);
             sprite.glowImage.setAlpha(0.5);
           } else {
             sprite.glowImage.setAlpha(0);
@@ -316,10 +288,9 @@ export class SlotMachineScene extends Phaser.Scene {
 
   private startBlur() {
     this.blurFrame = 0;
-    this.blurOverlay.setAlpha(0.85);
+    this.blurOverlay.setAlpha(0.8);
     this.blurTimer = this.time.addEvent({
-      delay: 80,
-      loop: true,
+      delay: 70, loop: true,
       callback: () => {
         this.blurFrame = (this.blurFrame + 1) % 8;
         this.blurOverlay.setTexture(`blur_${this.blurFrame}`);
@@ -328,10 +299,7 @@ export class SlotMachineScene extends Phaser.Scene {
   }
 
   private stopBlur() {
-    if (this.blurTimer) {
-      this.blurTimer.remove();
-      this.blurTimer = undefined;
-    }
+    if (this.blurTimer) { this.blurTimer.remove(); this.blurTimer = undefined; }
     this.blurOverlay.setAlpha(0);
   }
 
@@ -344,3 +312,5 @@ export class SlotMachineScene extends Phaser.Scene {
     this.tweens.killAll();
   }
 }
+
+export { GRID_W, GRID_H, CANVAS_W, CANVAS_H, CELL_SIZE, CELL_GAP, GRID_PAD, cellX, cellY };

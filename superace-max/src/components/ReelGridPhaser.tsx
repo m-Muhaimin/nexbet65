@@ -1,14 +1,16 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import Phaser from 'phaser';
-import { SlotMachineScene } from './phaser/SlotMachineScene';
+import {
+  SlotMachineScene,
+  CANVAS_W, CANVAS_H, GRID_W, GRID_H,
+  CELL_SIZE, CELL_GAP, GRID_PAD, cellX, cellY,
+} from './phaser/SlotMachineScene';
 import { SymbolArtwork } from './SymbolArtwork';
 import { WinningWaysLinePath } from './WinningWaysLinePath';
-import type { GridCell, WaysHit, MegaSymbol, GameMode } from '../types';
+import type { GridCell, WaysHit, GameMode } from '../types';
 
 const COLS = 5;
 const ROWS = 4;
-const CELL_SIZE = 96;
-const CELL_GAP = 4;
 
 interface ReelGridPhaserProps {
   grid: GridCell[][];
@@ -54,13 +56,12 @@ export const ReelGridPhaser: React.FC<ReelGridPhaserProps> = ({
     const game = new Phaser.Game({
       type: Phaser.AUTO,
       parent: canvasRef.current,
-      width: COLS * (CELL_SIZE + CELL_GAP) + 8,
-      height: ROWS * (CELL_SIZE + CELL_GAP) + 8,
+      width: CANVAS_W,
+      height: CANVAS_H,
       transparent: true,
       scene: SlotMachineScene,
       scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
+        mode: Phaser.Scale.NONE,
       },
       input: { touch: { capture: true } },
       audio: { noAudio: true },
@@ -96,9 +97,7 @@ export const ReelGridPhaser: React.FC<ReelGridPhaserProps> = ({
     prevGridRef.current = grid;
   }, [grid, isSpinning]);
 
-  const gridWidth = COLS * (CELL_SIZE + CELL_GAP);
-  const gridHeight = ROWS * (CELL_SIZE + CELL_GAP);
-
+  // ─── Winning cell detection ─────────────────────────────────────────────
   const winningCellIds = new Set<string>();
   for (const hit of waysHits) {
     for (const id of hit.cellIds) {
@@ -121,19 +120,18 @@ export const ReelGridPhaser: React.FC<ReelGridPhaserProps> = ({
       className="relative w-full h-full flex items-center justify-center"
       onClick={onQuickStop}
     >
+      {/* Phaser canvas — same pixel dimensions as overlays */}
       <div
         ref={canvasRef}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        style={{
-          width: gridWidth + 8,
-          height: gridHeight + 8,
-        }}
+        className="pointer-events-none"
+        style={{ width: CANVAS_W, height: CANVAS_H }}
       />
 
+      {/* Winning cell overlay — matches Phaser coordinates exactly */}
       {winningCells.length > 0 && (
         <div
           className="pointer-events-none absolute"
-          style={{ width: gridWidth, height: gridHeight }}
+          style={{ width: CANVAS_W, height: CANVAS_H, left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
         >
           {winningCells.map(({ col, row }) => {
             const cell = grid[col][row];
@@ -142,8 +140,8 @@ export const ReelGridPhaser: React.FC<ReelGridPhaserProps> = ({
                 key={`win-${cell.id}`}
                 className="absolute animate-winning-pop z-30"
                 style={{
-                  left: col * (CELL_SIZE + CELL_GAP),
-                  top: row * (CELL_SIZE + CELL_GAP),
+                  left: GRID_PAD + col * (CELL_SIZE + CELL_GAP),
+                  top: GRID_PAD + row * (CELL_SIZE + CELL_GAP),
                   width: CELL_SIZE,
                   height: CELL_SIZE,
                 }}
@@ -162,23 +160,32 @@ export const ReelGridPhaser: React.FC<ReelGridPhaserProps> = ({
         </div>
       )}
 
+      {/* Energy ripple columns */}
       {activeRippleColumns.length > 0 && (
-        <div className="absolute inset-0 pointer-events-none z-20">
+        <div
+          className="absolute pointer-events-none z-20"
+          style={{ width: CANVAS_W, height: CANVAS_H, left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
+        >
           {activeRippleColumns.map((col) => (
             <div
               key={`ripple-${rippleTriggerKey}-${col}`}
-              className="absolute bottom-0 w-[96px] bg-gradient-to-t from-cyan-400/30 via-transparent to-transparent animate-energy-ripple"
+              className="absolute bottom-0 bg-gradient-to-t from-cyan-400/30 via-transparent to-transparent animate-energy-ripple"
               style={{
-                left: col * (CELL_SIZE + CELL_GAP),
-                height: gridHeight,
+                left: GRID_PAD + col * (CELL_SIZE + CELL_GAP),
+                width: CELL_SIZE,
+                height: GRID_H,
               }}
             />
           ))}
         </div>
       )}
 
+      {/* Winning ways paths */}
       {waysHits.length > 0 && (
-        <div className="absolute inset-0 pointer-events-none z-25">
+        <div
+          className="absolute pointer-events-none z-25"
+          style={{ width: CANVAS_W, height: CANVAS_H, left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
+        >
           <WinningWaysLinePath
             waysHits={waysHits}
             grid={grid}
@@ -186,8 +193,12 @@ export const ReelGridPhaser: React.FC<ReelGridPhaserProps> = ({
         </div>
       )}
 
+      {/* Mega symbol borders */}
       {grid.some((col) => col.some((cell) => cell.megaSymbolId)) && (
-        <div className="absolute inset-0 pointer-events-none z-30">
+        <div
+          className="absolute pointer-events-none z-30"
+          style={{ width: CANVAS_W, height: CANVAS_H, left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
+        >
           {grid.map((col, colIdx) =>
             col.map((cell, rowIdx) => {
               if (!cell.isMegaOrigin) return null;
@@ -196,8 +207,8 @@ export const ReelGridPhaser: React.FC<ReelGridPhaserProps> = ({
                   key={`mega-${cell.megaSymbolId}`}
                   className="absolute border-2 border-yellow-400/60 rounded-md"
                   style={{
-                    left: colIdx * (CELL_SIZE + CELL_GAP) - 2,
-                    top: rowIdx * (CELL_SIZE + CELL_GAP) - 2,
+                    left: GRID_PAD + colIdx * (CELL_SIZE + CELL_GAP) - 2,
+                    top: GRID_PAD + rowIdx * (CELL_SIZE + CELL_GAP) - 2,
                     width: (cell.megaWidth || 1) * (CELL_SIZE + CELL_GAP) - CELL_GAP + 4,
                     height: (cell.megaHeight || 1) * (CELL_SIZE + CELL_GAP) - CELL_GAP + 4,
                     boxShadow: '0 0 16px rgba(250,204,21,0.4), inset 0 0 8px rgba(250,204,21,0.2)',

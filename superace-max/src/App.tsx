@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import { HeaderBar } from './components/HeaderBar';
 import { MultiplierBar } from './components/MultiplierBar';
 import { ReelGridPhaser } from './components/ReelGridPhaser';
-import { BlurFX } from './components/BlurFX';
 import { ControlBar } from './components/ControlBar';
 import { FooterBar } from './components/FooterBar';
 import { NavigationDrawer } from './components/NavigationDrawer';
@@ -18,7 +17,6 @@ import { useJackpotStore } from './stores/jackpotStore';
 import { useBoostStore } from './stores/boostStore';
 import { useSessionStore } from './stores/sessionStore';
 import { useUIStore } from './stores/uiStore';
-import { useHistoryStore } from './stores/historyStore';
 
 import { executeSpin, type SpinContext } from './engine/spinOrchestrator';
 import { engine } from './engine/clientEngine';
@@ -205,7 +203,6 @@ export default function App() {
           gameMode={game.gameMode}
           onQuickStop={handleQuickStop}
         />
-        <BlurFX isActive={game.isSpinning} />
       </div>
 
       <ControlBar
