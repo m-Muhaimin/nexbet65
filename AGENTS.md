@@ -6,7 +6,7 @@ Two independent projects sharing a Git repo. Neither project has CI or monorepo 
 
 | Directory | Stack | Deploy |
 |---|---|---|
-| `nexbet65.online/` | Next.js 14 (App Router), Prisma, Neon Postgres | Tarball scp → VPS `root@82.25.105.236` (systemd `nexbet65-web`) |
+| `nexbet65.online/` | Next.js 14 (App Router), Prisma 6, Neon Postgres | Tarball scp → VPS `root@82.25.105.236` (systemd `nexbet65-web`) |
 | `superace-max/` | Vite 6, React 19, TypeScript 5.8, Tailwind v4, Zustand, Phaser 4, Vitest | Google AI Studio / Cloud Run |
 
 Project-level details live in each directory's own `AGENTS.md` (nexbet65.online) or `README.md` (superace-max). Read those before editing either project.
@@ -37,6 +37,7 @@ npm run build      # Production build → dist/
 npm run lint       # tsc --noEmit (typecheck only)
 npm run test       # vitest run (single pass)
 npm run test:watch # vitest watch
+npm run process:assets  # sharp-based asset pipeline (scripts/process-assets.mjs)
 ```
 
 ## Critical constraints
@@ -46,6 +47,8 @@ npm run test:watch # vitest watch
 - **superace-max tsconfig has `noEmit: true`** — the `lint` script is a typecheck only; it does not produce output.
 - **superace-max uses Tailwind v4** (`@tailwindcss/vite` plugin), not v3. Do not add `tailwind.config.js` — config is CSS-first.
 - **superace-max Phaser 4** is a heavy dep; don't add it to nexbet65.online.
+- **superace-max vitest** runs with `pool: 'vmThreads'` and `fileParallelism: false` (sequentially, not in parallel). Tests use jsdom environment with `@testing-library/jest-dom` matchers.
+- **superace-max has an express server** (`express` dep, `server.js` in clean script) — not just a static Vite build.
 
 ## Windows path gotchas
 

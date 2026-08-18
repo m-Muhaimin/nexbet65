@@ -71,8 +71,8 @@ export class SlotMachineScene extends Phaser.Scene {
   }
 
   create() {
-    this.gridOriginX = (this.scale.width - REEL_WIDTH) / 2 + SYMBOL_SIZE / 2 + CELL_GAP / 2;
-    this.gridOriginY = (this.scale.height - REEL_HEIGHT) / 2 + SYMBOL_SIZE / 2 + CELL_GAP / 2;
+    this.gridOriginX = SYMBOL_SIZE / 2;
+    this.gridOriginY = SYMBOL_SIZE / 2;
 
     this.blurOverlay = this.add.tileSprite(
       this.scale.width / 2,
