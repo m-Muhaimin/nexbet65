@@ -84,7 +84,7 @@ export const GAMES: Game[] = [
     volatility: "Low–High",
     wsPort: 0,
     gradient: "from-brand via-emerald-950 to-black",
-    accent: "#a3e635",
+    accent: "#f6b01a",
     features: [
       "Provably fair — HMAC-SHA256 path, committed seed hash shown before every drop",
       "8–16 rows and three risk tiers with pre-calculated multiplier tables",

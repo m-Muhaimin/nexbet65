@@ -96,7 +96,7 @@ const THUMBS = [
   {
     slug: "color-game",
     title: "Color Game",
-    bg: ["#a3e635", "#166534", "#020d05"],
+    bg: ["#f6b01a", "#166534", "#020d05"],
     glow: "#d9f99d",
     accent: "#ffffff",
     motif: "color",
@@ -112,7 +112,7 @@ const THUMBS = [
   {
     slug: "crash-royale",
     title: "Crash Royale",
-    bg: ["#a3e635", "#14532d", "#020d05"],
+    bg: ["#f6b01a", "#14532d", "#020d05"],
     glow: "#d9f99d",
     accent: "#fde047",
     motif: "rocket",

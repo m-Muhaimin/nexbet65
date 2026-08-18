@@ -16,7 +16,7 @@ model WinUser {
   id           String           @id @default(cuid())
   username     String           @unique
   passwordHash String
-  avatar       String           @default("#a3e635")
+  avatar       String           @default("#f6b01a")
   memberSince  DateTime         @default(now())
   balance      Decimal          @default(0) @db.Decimal(16, 2)
   lockedBonus  Decimal          @default(0) @db.Decimal(16, 2) // non-withdrawable bonus funds still in the wallet

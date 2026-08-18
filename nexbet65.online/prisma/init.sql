@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS "WinUser" (
   "id"           TEXT         NOT NULL,
   "username"     TEXT         NOT NULL,
   "passwordHash" TEXT         NOT NULL,
-  "avatar"       TEXT         NOT NULL DEFAULT '#a3e635',
+  "avatar"       TEXT         NOT NULL DEFAULT '#f6b01a',
   "memberSince"  TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "balance"      DECIMAL(16,2) NOT NULL DEFAULT 0,
   "createdAt"    TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

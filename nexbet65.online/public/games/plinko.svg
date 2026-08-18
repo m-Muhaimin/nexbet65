@@ -6,8 +6,8 @@
       <stop offset="1" stop-color="#020d05"/>
     </linearGradient>
     <radialGradient id="glow" cx="0.5" cy="0.4" r="0.65">
-      <stop offset="0" stop-color="#a3e635" stop-opacity="0.4"/>
-      <stop offset="1" stop-color="#a3e635" stop-opacity="0"/>
+      <stop offset="0" stop-color="#f6b01a" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#f6b01a" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#ffffff" stop-opacity="0.14"/>
@@ -33,7 +33,7 @@
     <path d="M300 176 L290 186 M320 176 L310 186 M300 208 L290 198 M320 208 L310 198" stroke-linecap="round"/>
   </g>
 
-  <g fill="#a3e635">
+  <g fill="#f6b01a">
     <circle cx="300" cy="168" r="11"/>
     <circle cx="230" cy="242" r="11"/>
     <circle cx="300" cy="242" r="11"/>

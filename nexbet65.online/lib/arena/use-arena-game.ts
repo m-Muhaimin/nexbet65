@@ -198,7 +198,7 @@ export function useArenaGame({ wsUrl, gameType, username }: UseArenaGameOptions)
                     particleCount: 120,
                     spread: 90,
                     origin: { y: 0.5 },
-                    colors: ["#a3e635", "#4f46e5", "#ffffff"],
+                    colors: ["#f6b01a", "#4f46e5", "#ffffff"],
                   });
                 } else {
                   playMoveSound();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState } from 'react';
 import { Settings, RefreshCw, Zap, Minus, Plus, Square } from 'lucide-react';
 
 const BET_STEPS = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000];
@@ -27,46 +27,10 @@ interface ControlBarProps {
   onSpin?: () => void;
 }
 
-const SPIN_FRAMES = 9;
-const SPIN_FRAME_PATH = '/assets/ui/spin-btn_';
-const SPIN_INTERVAL_MS = 80;
-
-const SpinButtonSprite: React.FC<{ isSpinning: boolean; canSpin: boolean; spinCost: number; onClick: () => void }> = ({
+const SpinButtonImage: React.FC<{ isSpinning: boolean; canSpin: boolean; spinCost: number; onClick: () => void }> = ({
   isSpinning, canSpin, spinCost, onClick,
 }) => {
-  const [frame, setFrame] = useState(0);
-  const [hovered, setHovered] = useState(false);
   const [pressed, setPressed] = useState(false);
-  const rafRef = useRef<number | null>(null);
-  const lastTime = useRef(0);
-  const [loaded, setLoaded] = useState(false);
-  const [useFallback, setUseFallback] = useState(false);
-
-  useEffect(() => {
-    const img = new Image();
-    img.onload = () => setLoaded(true);
-    img.onerror = () => setUseFallback(true);
-    img.src = `${SPIN_FRAME_PATH}000.png`;
-  }, []);
-
-  useEffect(() => {
-    if (!isSpinning) {
-      setFrame(hovered ? 1 : 0);
-      if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = null; }
-      return;
-    }
-    let f = 0;
-    const animate = (t: number) => {
-      if (t - lastTime.current >= SPIN_INTERVAL_MS) {
-        f = (f + 1) % SPIN_FRAMES;
-        setFrame(f);
-        lastTime.current = t;
-      }
-      rafRef.current = requestAnimationFrame(animate);
-    };
-    rafRef.current = requestAnimationFrame(animate);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, [isSpinning, hovered]);
 
   const handleClick = () => {
     if (!canSpin || isSpinning) return;
@@ -75,57 +39,25 @@ const SpinButtonSprite: React.FC<{ isSpinning: boolean; canSpin: boolean; spinCo
     onClick();
   };
 
-  const SIZE = 56;
-
-  if (useFallback || !loaded) {
-    return (
-      <button
-        onClick={handleClick}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        disabled={!canSpin || isSpinning}
-        className={`
-          relative w-14 h-14 rounded-full flex items-center justify-center
-          transition-all duration-200 select-none
-          ${pressed ? 'scale-90' : 'scale-100'}
-          ${canSpin && !isSpinning
-            ? 'bg-gradient-to-b from-yellow-300 via-amber-400 to-orange-500 shadow-[0_0_24px_rgba(251,191,36,0.5)] cursor-pointer'
-            : 'bg-gray-600/60 shadow-none cursor-not-allowed opacity-50'
-          }
-        `}
-        aria-label={isSpinning ? 'Spinning' : `Spin for ৳${spinCost}`}
-      >
-        <div className="text-white font-black text-sm drop-shadow-lg">
-          {isSpinning ? '...' : 'SPIN'}
-        </div>
-      </button>
-    );
-  }
-
   return (
     <button
       onClick={handleClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       disabled={!canSpin || isSpinning}
       className={`
-        relative overflow-hidden select-none rounded-full
-        transition-transform duration-100
+        relative select-none transition-transform duration-100
         ${pressed ? 'scale-90' : 'scale-100'}
         ${canSpin && !isSpinning ? 'cursor-pointer hover:scale-105' : 'cursor-not-allowed opacity-50'}
       `}
-      style={{
-        width: SIZE,
-        height: SIZE,
-        backgroundImage: `url(${SPIN_FRAME_PATH}${String(frame).padStart(3, '0')}.png)`,
-        backgroundSize: '100% 100%',
-        backgroundRepeat: 'no-repeat',
-        borderRadius: '50%',
-      }}
       aria-label={isSpinning ? 'Spinning' : `Spin for ৳${spinCost}`}
     >
+      <img
+        src="/assets/ui/spin-buttons.png"
+        alt="Spin"
+        className="w-14 h-14 object-contain pointer-events-none"
+        draggable={false}
+      />
       {!isSpinning && (
-        <div className="absolute bottom-0.5 left-0 right-0 text-center text-[9px] font-black text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] pointer-events-none">
+        <div className="absolute bottom-0 left-0 right-0 text-center text-[9px] font-black text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] pointer-events-none">
           ৳{spinCost}
         </div>
       )}
@@ -234,7 +166,7 @@ export const ControlBar: React.FC<ControlBarProps> = React.memo(({
 
         {/* Sprite spin button */}
         <div className="flex flex-col items-center shrink-0">
-          <SpinButtonSprite
+          <SpinButtonImage
             isSpinning={isSpinning}
             canSpin={!isSpinning || autoSpinsRemaining > 0 || isFreeSpinsActive}
             spinCost={currentBet}

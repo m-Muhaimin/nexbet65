@@ -1,4 +1,4 @@
-const AVATARS = ["#a3e635", "#f59e0b", "#ec4899", "#8b5cf6", "#06b6d4", "#10b981"];
+const AVATARS = ["#f6b01a", "#f59e0b", "#ec4899", "#8b5cf6", "#06b6d4", "#10b981"];
 
 export function isValidUsername(username: string): boolean {
   return /^[a-zA-Z0-9_.]{3,20}$/.test(username);

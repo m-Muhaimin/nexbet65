@@ -127,7 +127,7 @@ on the VPS. Lives under `X:\nextbet65\game-server\nexbet65.com`.
   wallet flow. Spec: `PRD_P2P.md` (repo root).
 
 ## UI conventions
-- Brand lime `brand #a3e635` / `brand-dim #84cc16`, black `bg`, panels
+- Brand gold `brand #f6b01a` / `brand-dim #c9a43c`, black `bg`, panels
   `rounded-2xl border border-white/5 bg-[#111]`; numerals use `font-instrument`; money
   via `formatMoney` (৳, en-IN, `lib/games.ts`).
 - Server pages export `export const dynamic = "force-dynamic"`.
