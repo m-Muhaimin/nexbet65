@@ -3,13 +3,13 @@ import type { GridCell, SymbolType } from '../../types';
 
 const COLS = 5;
 const ROWS = 4;
-const CELL_SIZE = 96;
+const CELL_SIZE = 83;
 const CELL_GAP = 4;
-const GRID_W = COLS * (CELL_SIZE + CELL_GAP) - CELL_GAP; // 476
-const GRID_H = ROWS * (CELL_SIZE + CELL_GAP) - CELL_GAP; // 380
-const GRID_PAD = 6;
-const CANVAS_W = GRID_W + GRID_PAD * 2; // 488
-const CANVAS_H = GRID_H + GRID_PAD * 2; // 392
+const GRID_PAD = 4;
+const GRID_W = COLS * (CELL_SIZE + CELL_GAP) - CELL_GAP; // 431
+const GRID_H = ROWS * (CELL_SIZE + CELL_GAP) - CELL_GAP; // 344
+const CANVAS_W = GRID_W + GRID_PAD * 2; // 439
+const CANVAS_H = GRID_H + GRID_PAD * 2; // 352
 
 const SYMBOL_KEYS: SymbolType[] = ['A', 'K', 'Q', 'J', 'S', 'G', 'JK', 'SC'];
 
