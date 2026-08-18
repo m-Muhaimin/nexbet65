@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a3e635"/>
+      <stop offset="0.55" stop-color="#166534"/>
+      <stop offset="1" stop-color="#020d05"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#d9f99d" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#d9f99d" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ring">
+      <stop offset="0.75" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.35"/>
+    </radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.4" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect width="600" height="800" fill="url(#glow)"/>
+  <ellipse cx="300" cy="420" rx="217" ry="217" fill="url(#sheen)"/>
+  <g opacity="0.12">
+    <circle cx="60" cy="120" r="120" fill="#ffffff"/>
+    <circle cx="540" cy="700" r="150" fill="#ffffff"/>
+    <circle cx="530" cy="90" r="60" fill="#ffffff"/>
+  </g>
+  
+    <g transform="translate(300,400)">
+      <circle cx="0" cy="0" r="175" fill="#111827"/>
+      <path d="M 0 0 L 175 0 A 175 175 0 0 1 87.50000000000001 151.55444566227675 Z" fill="#ef4444"/><path d="M 0 0 L 87.50000000000001 151.55444566227675 A 175 175 0 0 1 -87.49999999999996 151.55444566227678 Z" fill="#f59e0b"/><path d="M 0 0 L -87.49999999999996 151.55444566227678 A 175 175 0 0 1 -175 2.1431318985078682e-14 Z" fill="#22c55e"/><path d="M 0 0 L -175 2.1431318985078682e-14 A 175 175 0 0 1 -87.50000000000007 -151.55444566227675 Z" fill="#3b82f6"/><path d="M 0 0 L -87.50000000000007 -151.55444566227675 A 175 175 0 0 1 87.50000000000001 -151.55444566227675 Z" fill="#8b5cf6"/><path d="M 0 0 L 87.50000000000001 -151.55444566227675 A 175 175 0 0 1 175 -4.2862637970157365e-14 Z" fill="#ec4899"/>
+      <circle cx="0" cy="0" r="175" fill="none" stroke="#ffffff" stroke-width="8"/>
+      <circle cx="0" cy="0" r="58" fill="#0f172a" stroke="#ffffff" stroke-width="5"/>
+      <polygon points="0,-32 28,24 -28,24" fill="#ffffff"/>
+      <circle cx="-118" cy="-118" r="7" fill="#ffffff"/>
+    </g>
+  <rect x="0" y="0" width="600" height="800" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1"/>
+</svg>

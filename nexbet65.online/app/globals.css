@@ -1,0 +1,268 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import shared design tokens */
+@import "../design/tokens.css";
+
+@layer base {
+  :root {
+    /* NexBet65 golden navy theme (superace-inspired) */
+    --background: 210 40% 6%;      /* #0a1526 deep navy */
+    --foreground: 52 100% 95%;     /* #fffbe8 warm ivory */
+    --card: 215 37% 10%;           /* #132036 navy surface */
+    --card-foreground: 52 100% 95%;
+    --popover: 215 37% 10%;
+    --popover-foreground: 52 100% 95%;
+    --primary: 38 93% 53%;         /* #f6b01a gold primary */
+    --primary-foreground: 210 40% 6%;
+    --secondary: 215 37% 14%;      /* #1a2a44 navy mid */
+    --secondary-foreground: 52 100% 95%;
+    --muted: 215 30% 12%;          /* #162236 muted navy */
+    --muted-foreground: 43 30% 60%;
+    --accent: 38 93% 53%;
+    --accent-foreground: 210 40% 6%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 30% 18%;         /* #22304a navy border */
+    --input: 215 30% 18%;
+    --ring: 38 93% 53%;
+    --radius: 0.75rem;
+    /* NexBet65 dark sidebar tokens */
+    --sidebar-background: 215 37% 8%;
+    --sidebar-foreground: 52 100% 95%;
+    --sidebar-primary: 38 93% 53%;
+    --sidebar-primary-foreground: 210 40% 6%;
+    --sidebar-accent: 215 37% 14%;
+    --sidebar-accent-foreground: 52 100% 95%;
+    --sidebar-border: 215 30% 18%;
+    --sidebar-ring: 38 93% 53%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-bg text-foreground antialiased;
+    overscroll-behavior-y: none;
+  }
+  ::selection {
+    background: #f6b01a;
+    color: #0a1526;
+  }
+}
+
+/* ── Mockup scrollbar ─────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+@layer utilities {
+  /* Dark glass nav / panels (mockup .glass) */
+  .glass {
+    background: rgba(17, 17, 17, 0.8);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .gold-glow {
+    box-shadow:
+      0 0 24px rgba(246, 176, 26, 0.35),
+      0 0 64px rgba(246, 176, 26, 0.12);
+  }
+  .text-glow {
+    text-shadow: 0 0 32px rgba(246, 176, 26, 0.45);
+  }
+  .multiplier-big {
+    font-size: clamp(52px, 7vw, 72px);
+    line-height: 1;
+  }
+  /* Aviator instrument readout: geometric mono with tabular numerals so the
+     digits never reflow horizontally as the value climbs. */
+  .font-instrument {
+    font-family:
+      ui-monospace,
+      "SF Mono",
+      "Cascadia Mono",
+      "Segoe UI Mono",
+      Menlo,
+      Consolas,
+      monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .text-glow-amber {
+    text-shadow: 0 0 28px rgba(255, 176, 32, 0.55);
+  }
+  .text-glow-red {
+    text-shadow: 0 0 28px rgba(255, 77, 61, 0.55);
+  }
+  .amber-glow {
+    box-shadow:
+      0 0 20px rgba(255, 176, 32, 0.35),
+      0 0 48px rgba(255, 176, 32, 0.12);
+  }
+  .hero-radial {
+    background: radial-gradient(
+      circle at top right,
+      rgba(163, 230, 53, 0.12),
+      transparent 60%
+    );
+  }
+  .fab {
+    width: 54px;
+    height: 54px;
+    transform: translateY(-22px);
+  }
+  @media (max-width: 380px) {
+    .fab {
+      width: 46px;
+      height: 46px;
+      transform: translateY(-18px);
+    }
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, #f6b01a, #c9a43c 45%, #fffbe8);
+  }
+  .bg-casino-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Active category pill (mockup .pill-active) */
+.pill-active {
+  background: #f6b01a !important;
+  color: #0a1526 !important;
+  border-color: #f6b01a !important;
+  font-weight: 600;
+}
+
+/* Brief red pulse overlay when the plane crashes */
+@keyframes crash-flash {
+  0% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.crash-flash {
+  animation: crash-flash 0.7s ease-out forwards;
+}
+
+/* Mines — breathing glow on unrevealed tiles while playing (brand gold) */
+@keyframes neon-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(246, 176, 26, 0.12), inset 0 0 5px rgba(246, 176, 26, 0.05);
+    border-color: rgba(246, 176, 26, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(246, 176, 26, 0.32), inset 0 0 10px rgba(246, 176, 26, 0.12);
+    border-color: rgba(246, 176, 26, 0.35);
+  }
+}
+.animate-neon-breathe {
+  animation: neon-breathe var(--breathe-speed, 3s) ease-in-out infinite;
+}
+
+/* Mines — reveal burst ring (gem sparkle / mine explosion) */
+@keyframes burst-ring {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+.burst-ring {
+  animation: burst-ring 0.7s ease-out forwards;
+}
+
+/* Mines — overlay + button entrances */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0.5) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+.pop-in {
+  animation: pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Admin — neon pulse border for the live "Next Crash Point" readout */
+@keyframes neon-border-pulse {
+  0%,
+  100% {
+    border-color: rgba(163, 230, 53, 0.3);
+    box-shadow:
+      0 0 14px rgba(163, 230, 53, 0.15),
+      inset 0 0 14px rgba(163, 230, 53, 0.05);
+  }
+  50% {
+    border-color: rgba(163, 230, 53, 0.9);
+    box-shadow:
+      0 0 34px rgba(163, 230, 53, 0.45),
+      inset 0 0 24px rgba(163, 230, 53, 0.12);
+  }
+}
+.animate-neon-pulse-border {
+  animation: neon-border-pulse 1.8s ease-in-out infinite;
+}
+
+/* prefers-reduced-motion → collapse animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
+}

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22c55e"/>
+      <stop offset="0.55" stop-color="#14532d"/>
+      <stop offset="1" stop-color="#020d05"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#4ade80" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#4ade80" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ring">
+      <stop offset="0.75" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.35"/>
+    </radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.4" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect width="600" height="800" fill="url(#glow)"/>
+  <ellipse cx="300" cy="420" rx="217" ry="217" fill="url(#sheen)"/>
+  <g opacity="0.12">
+    <circle cx="60" cy="120" r="120" fill="#ffffff"/>
+    <circle cx="540" cy="700" r="150" fill="#ffffff"/>
+    <circle cx="530" cy="90" r="60" fill="#ffffff"/>
+  </g>
+  
+    <g transform="translate(300,400)">
+      <circle cx="-150" cy="-150" r="27" fill="#111827" stroke="#4ade80" stroke-width="3"/>
+                 <path d="M -158 -168 L -168 -158 M -142 -168 L -132 -158 M -158 -132 L -168 -142 M -142 -132 L -132 -142" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/>
+                 <circle cx="-150" cy="-150" r="10" fill="#fde047"/><circle cx="-75" cy="-150" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="-75,-163 -64,-153 -68,-138 -82,-138 -86,-153" fill="#4ade80" opacity="0.9"/><circle cx="0" cy="-150" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="0,-163 11,-153 7,-138 -7,-138 -11,-153" fill="#4ade80" opacity="0.9"/><circle cx="75" cy="-150" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="75,-163 86,-153 82,-138 68,-138 64,-153" fill="#4ade80" opacity="0.9"/><circle cx="150" cy="-150" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="150,-163 161,-153 157,-138 143,-138 139,-153" fill="#4ade80" opacity="0.9"/><circle cx="-150" cy="-75" r="27" fill="#111827" stroke="#4ade80" stroke-width="3"/>
+                 <path d="M -158 -93 L -168 -83 M -142 -93 L -132 -83 M -158 -57 L -168 -67 M -142 -57 L -132 -67" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/>
+                 <circle cx="-150" cy="-75" r="10" fill="#fde047"/><circle cx="-75" cy="-75" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="-75,-88 -64,-78 -68,-63 -82,-63 -86,-78" fill="#4ade80" opacity="0.9"/><circle cx="0" cy="-75" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="0,-88 11,-78 7,-63 -7,-63 -11,-78" fill="#4ade80" opacity="0.9"/><circle cx="75" cy="-75" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="75,-88 86,-78 82,-63 68,-63 64,-78" fill="#4ade80" opacity="0.9"/><circle cx="150" cy="-75" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="150,-88 161,-78 157,-63 143,-63 139,-78" fill="#4ade80" opacity="0.9"/><circle cx="-150" cy="0" r="27" fill="#111827" stroke="#4ade80" stroke-width="3"/>
+                 <path d="M -158 -18 L -168 -8 M -142 -18 L -132 -8 M -158 18 L -168 8 M -142 18 L -132 8" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/>
+                 <circle cx="-150" cy="0" r="10" fill="#fde047"/><circle cx="-75" cy="0" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="-75,-13 -64,-3 -68,12 -82,12 -86,-3" fill="#4ade80" opacity="0.9"/><circle cx="0" cy="0" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="0,-13 11,-3 7,12 -7,12 -11,-3" fill="#4ade80" opacity="0.9"/><circle cx="75" cy="0" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="75,-13 86,-3 82,12 68,12 64,-3" fill="#4ade80" opacity="0.9"/><circle cx="150" cy="0" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="150,-13 161,-3 157,12 143,12 139,-3" fill="#4ade80" opacity="0.9"/><circle cx="-150" cy="75" r="27" fill="#111827" stroke="#4ade80" stroke-width="3"/>
+                 <path d="M -158 57 L -168 67 M -142 57 L -132 67 M -158 93 L -168 83 M -142 93 L -132 83" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/>
+                 <circle cx="-150" cy="75" r="10" fill="#fde047"/><circle cx="-75" cy="75" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="-75,62 -64,72 -68,87 -82,87 -86,72" fill="#4ade80" opacity="0.9"/><circle cx="0" cy="75" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="0,62 11,72 7,87 -7,87 -11,72" fill="#4ade80" opacity="0.9"/><circle cx="75" cy="75" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="75,62 86,72 82,87 68,87 64,72" fill="#4ade80" opacity="0.9"/><circle cx="150" cy="75" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="150,62 161,72 157,87 143,87 139,72" fill="#4ade80" opacity="0.9"/><circle cx="-150" cy="150" r="27" fill="#111827" stroke="#4ade80" stroke-width="3"/>
+                 <path d="M -158 132 L -168 142 M -142 132 L -132 142 M -158 168 L -168 158 M -142 168 L -132 158" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/>
+                 <circle cx="-150" cy="150" r="10" fill="#fde047"/><circle cx="-75" cy="150" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="-75,137 -64,147 -68,162 -82,162 -86,147" fill="#4ade80" opacity="0.9"/><circle cx="0" cy="150" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="0,137 11,147 7,162 -7,162 -11,147" fill="#4ade80" opacity="0.9"/><circle cx="75" cy="150" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="75,137 86,147 82,162 68,162 64,147" fill="#4ade80" opacity="0.9"/><circle cx="150" cy="150" r="27" fill="#14532d" stroke="#4ade80" stroke-width="3"/>
+                 <polygon points="150,137 161,147 157,162 143,162 139,147" fill="#4ade80" opacity="0.9"/>
+    </g>
+  <rect x="0" y="0" width="600" height="800" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1"/>
+</svg>

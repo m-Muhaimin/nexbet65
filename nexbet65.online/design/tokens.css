@@ -1,0 +1,42 @@
+/* ============================================================
+   NexBet65 Platform — Design Tokens (root copy)
+   Canonical: X:\nexbet65\DESIGN_TOKENS.css
+   Aligned with superace-frontend gold-navy design system.
+   ============================================================ */
+:root {
+  /* Brand primary (gold) — canonical */
+  --color-primary: 38 93% 53%;            /* #f6b01a */
+  --color-primary-foreground: 210 40% 6%; /* #0a1526 */
+
+  /* Gold accents */
+  --color-gold: 38 93% 53%;               /* #f6b01a */
+  --color-gold-light: 43 87% 69%;         /* #f4cf6d */
+  --color-gold-highlight: 52 100% 95%;    /* #fffbe8 */
+  --color-gold-deep: 36 76% 31%;          /* #8a5a12 */
+  --color-gold-border: 44 54% 51%;        /* #c9a43c */
+
+  /* Player colours */
+  --color-pink: 340 85% 57%;              /* #ff2e88 */
+  --color-cyan: 191 87% 64%;              /* #1fe0ff */
+
+  /* Navy backgrounds — canonical */
+  --color-bg-dark: 210 40% 6%;            /* #0a1526 deep navy */
+  --color-bg: 210 40% 4%;                 /* #071019 deepest navy */
+  --color-card: 215 37% 10%;              /* #132036 navy surface */
+  --color-navy-surface: 215 37% 14%;      /* #1a2a44 */
+  --color-navy-border: 215 30% 18%;       /* #22304a */
+
+  /* Utility colours */
+  --color-success: 120 60% 50%;
+  --color-destructive: 0 84% 60%;
+
+  /* Border & ring */
+  --color-border: 215 30% 18%;
+  --color-ring: var(--color-primary);
+  --radius: 0.75rem;
+}
+
+/* Export Tailwind-friendly colour variables */
+.bg-primary { background-color: hsl(var(--color-primary)); }
+.text-primary { color: hsl(var(--color-primary)); }
+.border-primary { border-color: hsl(var(--color-primary)); }

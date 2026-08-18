@@ -1,0 +1,766 @@
+
+> win111.com@0.1.0 start
+> next start -p 3010
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3010
+
+ ✓ Starting...
+ ✓ Ready in 731ms
+[register] failed: Transaction API error: Unable to start a transaction in the given time.
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Server has closed the connection.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Server has closed the connection.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Server has closed the connection.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Timed out fetching a new connection from the connection pool. More info: http://pris.ly/d/connection-pool (Current connection pool timeout: 10, connection limit: 9)
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Server has closed the connection.
+prisma:error Error in PostgreSQL connection: Error { kind: Io, cause: Some(Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }) }
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+[results] failed: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.
+prisma:error 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`
+
+Please make sure your database server is running at `ep-rapid-hill-adlbr3ip-pooler.c-2.us-east-1.aws.neon.tech:5432`.

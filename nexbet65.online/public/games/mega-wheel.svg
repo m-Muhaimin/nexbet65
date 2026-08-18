@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fb923c"/>
+      <stop offset="0.55" stop-color="#7c2d12"/>
+      <stop offset="1" stop-color="#160501"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#fdba74" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#fdba74" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ring">
+      <stop offset="0.75" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.35"/>
+    </radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.4" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect width="600" height="800" fill="url(#glow)"/>
+  <ellipse cx="300" cy="420" rx="217" ry="217" fill="url(#sheen)"/>
+  <g opacity="0.12">
+    <circle cx="60" cy="120" r="120" fill="#ffffff"/>
+    <circle cx="540" cy="700" r="150" fill="#ffffff"/>
+    <circle cx="530" cy="90" r="60" fill="#ffffff"/>
+  </g>
+  
+    <g transform="translate(300,400)">
+      <circle cx="0" cy="0" r="180" fill="#1c0a02" stroke="#fbbf24" stroke-width="10"/>
+      <path d="M 0 0 L 160 0 A 160 160 0 0 1 113.13708498984761 113.1370849898476 Z" fill="#ef4444" stroke="#1c0a02" stroke-width="4"/><path d="M 0 0 L 113.13708498984761 113.1370849898476 A 160 160 0 0 1 9.797174393178826e-15 160 Z" fill="#f59e0b" stroke="#1c0a02" stroke-width="4"/><path d="M 0 0 L 9.797174393178826e-15 160 A 160 160 0 0 1 -113.1370849898476 113.13708498984761 Z" fill="#22c55e" stroke="#1c0a02" stroke-width="4"/><path d="M 0 0 L -113.1370849898476 113.13708498984761 A 160 160 0 0 1 -160 1.9594348786357652e-14 Z" fill="#3b82f6" stroke="#1c0a02" stroke-width="4"/><path d="M 0 0 L -160 1.9594348786357652e-14 A 160 160 0 0 1 -113.13708498984764 -113.1370849898476 Z" fill="#ef4444" stroke="#1c0a02" stroke-width="4"/><path d="M 0 0 L -113.13708498984764 -113.1370849898476 A 160 160 0 0 1 -2.9391523179536473e-14 -160 Z" fill="#f59e0b" stroke="#1c0a02" stroke-width="4"/><path d="M 0 0 L -2.9391523179536473e-14 -160 A 160 160 0 0 1 113.13708498984758 -113.13708498984764 Z" fill="#22c55e" stroke="#1c0a02" stroke-width="4"/><path d="M 0 0 L 113.13708498984758 -113.13708498984764 A 160 160 0 0 1 160 -3.9188697572715304e-14 Z" fill="#3b82f6" stroke="#1c0a02" stroke-width="4"/>
+      <circle cx="0" cy="0" r="46" fill="#fbbf24" stroke="#92400e" stroke-width="6"/>
+      <polygon points="0,-26 23,20 -23,20" fill="#1c0a02"/>
+      <circle cx="-95" cy="165" r="16" fill="#ffffff" opacity="0.4"/>
+      <circle cx="120" cy="-120" r="11" fill="#ffffff" opacity="0.4"/>
+    </g>
+  <rect x="0" y="0" width="600" height="800" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1"/>
+</svg>

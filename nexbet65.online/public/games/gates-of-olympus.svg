@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="0.55" stop-color="#3730a3"/>
+      <stop offset="1" stop-color="#0a0518"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#e0e7ff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#e0e7ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ring">
+      <stop offset="0.75" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.35"/>
+    </radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.4" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect width="600" height="800" fill="url(#glow)"/>
+  <ellipse cx="300" cy="420" rx="217" ry="217" fill="url(#sheen)"/>
+  <g opacity="0.12">
+    <circle cx="60" cy="120" r="120" fill="#ffffff"/>
+    <circle cx="540" cy="700" r="150" fill="#ffffff"/>
+    <circle cx="530" cy="90" r="60" fill="#ffffff"/>
+  </g>
+  
+    <g transform="translate(300,400)">
+      <rect x="-150" y="-200" width="52" height="230" rx="8" fill="#e0e7ff" opacity="0.92"/>
+      <rect x="-26" y="-200" width="52" height="230" rx="8" fill="#c7d2fe" opacity="0.92"/>
+      <rect x="98" y="-200" width="52" height="230" rx="8" fill="#e0e7ff" opacity="0.92"/>
+      <rect x="-186" y="-70" width="372" height="30" rx="6" fill="#a5b4fc" opacity="0.85"/>
+      <rect x="-186" y="60" width="372" height="26" rx="6" fill="#a5b4fc" opacity="0.85"/>
+      <polygon points="0,-150 -34,-60 34,-60" fill="#fbbf24"/>
+      <polygon points="0,-60 -54,10 54,10" fill="#fbbf24" opacity="0.8"/>
+      <circle cx="0" cy="22" r="24" fill="#fde68a"/>
+      <polygon points="0,52 -24,120 24,120" fill="#fbbf24" opacity="0.7"/>
+    </g>
+  <rect x="0" y="0" width="600" height="800" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1"/>
+</svg>

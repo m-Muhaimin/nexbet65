@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#34d399"/>
+      <stop offset="0.55" stop-color="#065f46"/>
+      <stop offset="1" stop-color="#01150d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#fde047" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#fde047" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ring">
+      <stop offset="0.75" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.35"/>
+    </radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.4" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect width="600" height="800" fill="url(#glow)"/>
+  <ellipse cx="300" cy="420" rx="217" ry="217" fill="url(#sheen)"/>
+  <g opacity="0.12">
+    <circle cx="60" cy="120" r="120" fill="#ffffff"/>
+    <circle cx="540" cy="700" r="150" fill="#ffffff"/>
+    <circle cx="530" cy="90" r="60" fill="#ffffff"/>
+  </g>
+  
+    <g transform="translate(300,400)">
+      <rect x="-92" y="60" width="184" height="40" rx="10" fill="#065f46"/>
+      <circle cx="-84" cy="80" r="7" fill="#fde047" opacity="0.9"/><circle cx="-60" cy="80" r="7" fill="#fde047" opacity="0.9"/><circle cx="-36" cy="80" r="7" fill="#fde047" opacity="0.9"/><circle cx="-12" cy="80" r="7" fill="#fde047" opacity="0.9"/><circle cx="12" cy="80" r="7" fill="#fde047" opacity="0.9"/><circle cx="36" cy="80" r="7" fill="#fde047" opacity="0.9"/><circle cx="60" cy="80" r="7" fill="#fde047" opacity="0.9"/><circle cx="84" cy="80" r="7" fill="#fde047" opacity="0.9"/>
+      
+    <circle cx="-60" cy="-90" r="60" fill="#fde047"/>
+    <circle cx="-60" cy="-90" r="60" fill="url(#ring)" opacity="0.9"/>
+    <circle cx="-73.2" cy="-103.2" r="19.2" fill="#ffffff" opacity="0.35"/>
+    <polygon points="-60,-123 -49.2,-99.6 -28.2,-99.6 -45,-81.6 -39.599999999999994,-60 -60,-73.8 -80.4,-60 -75,-81.6 -91.8,-99.6 -70.8,-99.6" fill="#b45309" opacity="0.85"/>
+    <circle cx="0" cy="-50" r="52" fill="#fde047"/>
+    <circle cx="0" cy="-50" r="52" fill="url(#ring)" opacity="0.9"/>
+    <circle cx="-11.44" cy="-61.44" r="16.64" fill="#ffffff" opacity="0.35"/>
+    <polygon points="0,-78.6 9.36,-58.32 27.560000000000002,-58.32 13,-42.72 17.68,-24 0,-35.96 -17.68,-24 -13,-42.72 -27.560000000000002,-58.32 -9.36,-58.32" fill="#b45309" opacity="0.85"/>
+    <circle cx="60" cy="-10" r="44" fill="#fde047"/>
+    <circle cx="60" cy="-10" r="44" fill="url(#ring)" opacity="0.9"/>
+    <circle cx="50.32" cy="-19.68" r="14.08" fill="#ffffff" opacity="0.35"/>
+    <polygon points="60,-34.2 67.92,-17.04 83.32,-17.04 71,-3.84 74.96000000000001,12 60,1.8800000000000008 45.04,12 49,-3.84 36.68,-17.04 52.08,-17.04" fill="#b45309" opacity="0.85"/>
+      <circle cx="0" cy="10" r="44" fill="#fbbf24"/>
+      <polygon points="0,-30 14,-8 40,-4 20,12 25,40 0,26 -25,40 -20,12 -40,-4 -14,-8" fill="#92400e"/>
+    </g>
+  <rect x="0" y="0" width="600" height="800" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1"/>
+</svg>

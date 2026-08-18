@@ -1,0 +1,252 @@
+// nexbet65.com dashboard persistence.
+// Namespaced models (WinUser / WinTransaction) so they NEVER collide with the
+// shared game-server tables (User / Round / Bet) in the same Neon database.
+// Keep Prisma pinned to v6 — do not bump to v7 (sibling repos use v6).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model WinUser {
+  id           String           @id @default(cuid())
+  username     String           @unique
+  passwordHash String
+  avatar       String           @default("#a3e635")
+  memberSince  DateTime         @default(now())
+  balance      Decimal          @default(0) @db.Decimal(16, 2)
+  lockedBonus  Decimal          @default(0) @db.Decimal(16, 2) // non-withdrawable bonus funds still in the wallet
+  referredById String? // referrer's WinUser.id (set at registration from their referral code)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  transactions WinTransaction[]
+  gameState    WinGameState?
+  referredBy   WinUser?         @relation("Referrals", fields: [referredById], references: [id], onDelete: SetNull)
+  referrals    WinUser[]        @relation("Referrals")
+  p2pTransactions P2PTransaction[]
+
+  @@index([referredById])
+}
+
+// Per-user game state for SuperAce — stores persistent session data so a
+// page reload or new device picks up exactly where the player left off.
+model WinGameState {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  gameMode        String   @default("deluxe") // classic | deluxe
+  betAmount       Decimal  @default(10) @db.Decimal(16, 2)
+  freeSpinsLeft   Int      @default(0)
+  freeSpinsTotal  Int      @default(0)
+  freeSpinsWin    Decimal  @default(0) @db.Decimal(16, 2) // accumulated win during free spins round
+  vaultBalance    Decimal  @default(0) @db.Decimal(16, 2)
+  vaultHarvested  Decimal  @default(0) @db.Decimal(16, 2)
+  loyaltyPoints   Int      @default(0)
+  vipTier         String   @default("Bronze")
+  totalBets       Decimal  @default(0) @db.Decimal(16, 2)
+  totalWins       Decimal  @default(0) @db.Decimal(16, 2)
+  spinCount       Int      @default(0)
+  lastSpinId      String?
+  isMuted         Boolean  @default(false)
+  isTurbo         Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
+  createdAt       DateTime @default(now())
+
+  user WinUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model WinTransaction {
+  id                String    @id @default(uuid())
+  userId            String
+  kind              String // signup_bonus | bet | payout | refund | manual | deposit | withdraw | deposit_bonus
+  amount            Decimal   @db.Decimal(16, 2) // signed: -10 bet, +20 payout
+  balanceAfter      Decimal   @db.Decimal(16, 2)
+  ref               String?   @unique // client idempotency key (prevents double-record)
+  meta              String?
+  type              String? // deposit | withdraw — only set on payment-request rows
+  method            String? // bkash | nagad | bank | crypto
+  transactionId     String? // user-submitted TX / reference number
+  senderAccount     String? // user's account / number / wallet address
+  status            String? // pending | approved | rejected (NULL = pure ledger row)
+  approvedAt        DateTime?
+  firstDepositBonus Decimal?  @db.Decimal(16, 2) // 30% bonus granted on the first deposit
+  createdAt         DateTime  @default(now())
+
+  user WinUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([kind])
+  @@index([status])
+}
+
+// Team members (super admin / moderator / operator) who log in with an access
+// token instead of a password. Only the token hash is stored — never the raw
+// token. `permissions` is a TEXT[] of page-level permission keys.
+model WinTeamMember {
+  id          String    @id @default(cuid())
+  name        String
+  role        String    @default("moderator") // super_admin | moderator | operator
+  permissions String[]  @default([])
+  tokenHash   String    @unique
+  tokenHint   String // last 4 chars of the raw token, shown in the admin table
+  isActive    Boolean   @default(true)
+  lastLoginAt DateTime?
+  createdBy   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// P2P deposit matching (zero-KYC agent float). Namespaced Win* style not
+// needed here — these model names (P2PAgent etc.) don't exist in the shared
+// game-server schemas, so they are safe. Currency is BDT (৳) to match nexbet65.
+// ---------------------------------------------------------------------------
+
+// An agent holds a float of their own money on the site and gets matched with
+// players who want to deposit. Money movement: player sends real money to the
+// agent's wallet, agent confirms, the site credits the player's balance and
+// deducts the same amount from the agent's float (site-held).
+model P2PAgent {
+  agentCode         String   @id // human code, e.g. AGT-X7K9 (generated server-side)
+  passwordHash      String
+  recoveryKeyHash   String // first-4-of-key "fingerprint" + sha256 of the full key
+  recoveryKeyHint   String // first 4 chars of the recovery key (shown once)
+  deviceFingerprint String // first-registration device hash (bind-at-signup rule)
+  status            String   @default("PROBATION") // ACTIVE | PROBATION | SUSPENDED | BANNED
+  floatBalance      Decimal  @default(0) @db.Decimal(16, 2) // agent money held by site
+  currency          String   @default("BDT")
+  successRate       Decimal  @default(1) @db.Decimal(6, 4) // CONFIRMED/(CONFIRMED+DENIED+EXPIRED)
+  avgResponseSec    Int      @default(0)
+  totalTxns         Int      @default(0)
+  isOnline          Boolean  @default(false)
+  lastActiveAt      DateTime?
+  registeredAt      DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  wallets           P2PAgentWallet[]
+  ledger            P2PFloatLedger[]
+  transactions      P2PTransaction[]
+  sessions          P2PAgentSession[]
+
+  @@index([status])
+  @@index([isOnline])
+}
+
+model P2PAgentWallet {
+  id           Int      @id @default(autoincrement())
+  agentCode    String
+  walletType   String // bkash | nagad | bank | usdt | usdc
+  walletNumber String
+  holderName   String
+  isPrimary    Boolean  @default(false)
+  boundAt      DateTime @default(now())
+  usableAfter  DateTime @default(now()) // new wallets are usable after a 24h cooldown
+  agent        P2PAgent @relation(fields: [agentCode], references: [agentCode], onDelete: Cascade)
+
+  @@unique([agentCode, walletType, walletNumber])
+  @@index([agentCode, isPrimary])
+}
+
+// Every float movement. Positive DEPOSIT = agent tops up their site-held float.
+// PLAYER_DEPOSIT (negative) = deducted when a matched deposit is confirmed.
+// COMMISSION / ADJUSTMENT / FORFEITURE = platform corrections.
+model P2PFloatLedger {
+  id           BigInt   @id @default(autoincrement())
+  agentCode    String
+  txnType      String // DEPOSIT | PLAYER_DEPOSIT | COMMISSION | ADJUSTMENT | FORFEITURE
+  amount       Decimal  @db.Decimal(16, 2) // signed
+  balanceAfter Decimal  @db.Decimal(16, 2)
+  referenceId  String? // TOP-XXXX (top-up id) or TXN-YYYYMMDD-XXXXX (match id)
+  status       String? // NULL = applied; PENDING = top-up awaiting admin approval
+  metadata     Json?
+  createdAt    DateTime @default(now())
+  agent        P2PAgent @relation(fields: [agentCode], references: [agentCode], onDelete: Cascade)
+
+  @@index([agentCode, createdAt])
+}
+
+model P2PTransaction {
+  id                String      @id // readable id, e.g. TXN-20260812-00451
+  playerId          String
+  agentCode         String?
+  type              String      @default("DEPOSIT")
+  requestedAmount   Decimal     @db.Decimal(16, 2)
+  confirmedAmount   Decimal?    @db.Decimal(16, 2)
+  // PENDING | CONFIRMED | DENIED | EXPIRED | ESCALATED | ADMIN_APPROVED | ADMIN_REJECTED
+  status            String      @default("PENDING")
+  riskScore         Int?
+  playerProof       Json? // { transactionId, senderAccount, sentAmount, screenshotUrl, note, submittedAt }
+  agentConfirmation Json? // { confirmedAmount, transactionId, note, respondedAt }
+  assignedAt        DateTime    @default(now())
+  completedAt       DateTime?
+  expiresAt         DateTime // player 10-min window to submit proof; then expires if unproven
+  referenceCode     String? // DEP-<epoch>-<rand4>, quoted by the player when sending money
+  playerScreenshotUrl String? // proof screenshot URL
+  sentAmount        Decimal?    @db.Decimal(16, 2) // player-declared amount sent (10% tolerance)
+  agentDeadline     DateTime? // agent SLA to respond, set when proof is submitted
+  escalatedAt       DateTime? // auto-escalation timestamp (agent SLA breach)
+  adminNote         String? // admin resolution note
+  createdAt         DateTime    @default(now())
+  agent             P2PAgent?   @relation(fields: [agentCode], references: [agentCode], onDelete: SetNull)
+  player            WinUser     @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([agentCode, status])
+  @@index([playerId, status])
+  @@index([status, expiresAt])
+}
+
+model P2PAgentSession {
+  id                String    @id @default(cuid())
+  agentCode         String
+  sessionTokenHash  String    @unique
+  deviceFingerprint String
+  ipAddress         String?
+  wsTicket          String? // short-lived WS auth token (30s TTL)
+  wsTicketExpiresAt DateTime?
+  createdAt         DateTime  @default(now())
+  expiresAt         DateTime
+  lastActivityAt    DateTime  @default(now())
+  agent             P2PAgent  @relation(fields: [agentCode], references: [agentCode], onDelete: Cascade)
+
+  @@index([agentCode])
+}
+
+model P2PAuditLog {
+  id         BigInt   @id @default(autoincrement())
+  actor      String // "ADMIN:<id>" | "AGENT:<agentCode>" | "SYSTEM"
+  action     String
+  targetType String?
+  targetId   String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([actor])
+}
+
+// In-app notification inbox (Phase 6 of the P2P PRD). Event records written by
+// the service layer; the 5s WS polling remains the delivery fallback until a
+// push channel exists. Additive — existing flows ignore this table.
+model P2PNotification {
+  id            String    @id @default(cuid())
+  type          String // txn.wallet_ready | txn.new_assignment | txn.confirmed | txn.denied | txn.escalated | txn.admin_approved | txn.admin_rejected | agent.* | system.*
+  category      String // transaction | agent | admin | system
+  priority      String // critical | high | medium | low
+  recipientType String // player | agent | admin | broadcast
+  recipientId   String?
+  payload       Json?
+  status        String    @default("PENDING") // PENDING | DELIVERED | READ | EXPIRED | FAILED
+  readAt        DateTime?
+  expiresAt     DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@index([recipientType, recipientId, status])
+  @@index([createdAt])
+}

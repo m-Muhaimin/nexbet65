@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+<title>WIN 111 — Play. Win. Withdraw.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  /* Design tokens per PRD §2.4 — maps Tailwind theme to WIN 111 CSS custom properties */
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: { DEFAULT: '#a3e635', dim: '#84cc16' }, /* --color-lime */
+          bg: '#000000',                                  /* --color-bg */
+          surface: '#111111',                             /* --color-surface */
+          surface2: '#1a1a1a',
+        },
+        fontFamily: { sans: ['Inter', 'Noto Sans Bengali', 'sans-serif'] },
+      }
+    }
+  }
+</script>
+<style>
+  :root { --color-lime:#a3e635; --color-bg:#000; --color-surface:#111; }
+  html { scroll-behavior:smooth; }
+  body { background:#000; }
+  ::selection { background:#a3e635; color:#000; }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:#000; }
+  ::-webkit-scrollbar-thumb { background:#262626; border-radius:8px; }
+  ::-webkit-scrollbar-thumb:hover { background:#3a3a3a; }
+  .no-scrollbar::-webkit-scrollbar { display:none; }
+  .no-scrollbar { scrollbar-width:none; }
+
+  /* Glass nav (mockup white glass → WIN 111 dark glass) */
+  .glass { background:rgba(17,17,17,.8); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+  .lime-glow { box-shadow:0 0 24px rgba(163,230,53,.35), 0 0 64px rgba(163,230,53,.12); }
+  .text-glow { text-shadow:0 0 32px rgba(163,230,53,.45); }
+
+  /* Multiplier ticker — PRD: 52–72px lime text */
+  win-multiplier { display:inline-block; }
+  .multiplier-big { font-size:clamp(52px, 7vw, 72px); }
+
+  .pill-active { background:#a3e635 !important; color:#000 !important; border-color:#a3e635 !important; font-weight:600; }
+
+  /* Provider marquee */
+  .marquee { display:flex; gap:4rem; width:max-content; animation:marquee 32s linear infinite; }
+  @keyframes marquee { to { transform:translateX(-50%); } }
+
+  /* Live win feed entry */
+  @keyframes winIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:none; } }
+  .win-in { animation:winIn .45s ease; }
+
+  /* Hero radial — PRD appendix */
+  .hero-radial { background:radial-gradient(circle at top right, rgba(163,230,53,.12), transparent 60%); }
+
+  /* Deposit FAB — 54×54, lifts 22px */
+  .fab { width:54px; height:54px; transform:translateY(-22px); }
+
+  /* PRD §2.6: prefers-reduced-motion → collapse animation to 0ms */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration:0ms !important; transition-duration:0ms !important; }
+  }
+</style>
+</head>
+
+<body class="bg-bg text-white antialiased font-sans">
+
+<!-- ══════════════════════════════════════════════════════════════
+     VIEW 1 — MARKETING LANDING  (adapted from MagicAI mockup:
+     Hero / TrustedBy / Features / Pricing→VIP / Testimonials / CTA / Footer)
+═══════════════════════════════════════════════════════════════ -->
+<div id="view-landing">
+
+  <!-- Glass sticky nav -->
+  <header class="sticky top-0 z-40 glass border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+      <a class="flex items-center gap-2 shrink-0" href="#">
+        <span class="w-8 h-8 rounded-lg bg-brand text-black font-black flex items-center justify-center lime-glow text-sm">W</span>
+        <span class="font-extrabold tracking-tight text-lg">WIN<span class="text-brand"> 111</span></span>
+      </a>
+      <nav class="hidden md:flex items-center gap-7 text-sm text-white/60">
+        <a href="#features" class="hover:text-white transition">Features</a>
+        <a href="#vip" class="hover:text-white transition">VIP Club</a>
+        <a href="#testimonials" class="hover:text-white transition">Winners</a>
+        <a href="#" onclick="showView('lobby');return false" class="hover:text-white transition">Live Lobby</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <button data-open="auth-modal" class="text-sm font-medium text-white/70 hover:text-white px-3 py-2 transition">Login</button>
+        <button data-open="auth-modal" class="text-sm font-semibold bg-brand text-black rounded-full px-4 py-2 hover:bg-brand-dim transition">Register</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden hero-radial">
+    <div class="max-w-6xl mx-auto px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-3 py-1 text-xs font-semibold text-brand mb-6">
+          🇧🇩 Bangladesh's fastest-growing gaming platform
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight">
+          Play. Win.<br><span class="text-brand text-glow">Withdraw Instantly.</span>
+        </h1>
+        <p class="mt-5 text-white/60 text-lg max-w-lg">
+          2,500+ licensed slots, crash &amp; live casino games. Deposit with
+          <b class="text-white/90">bKash, Nagad or Rocket</b> in under 60 seconds —
+          খেলুন এবং সাথে সাথেই উইথড্র করুন।
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <button data-open="auth-modal" class="bg-brand text-black font-bold rounded-full px-7 py-3.5 lime-glow hover:bg-brand-dim transition">
+            Register &amp; Get 100% Bonus →
+          </button>
+          <button onclick="showView('lobby')" class="rounded-full px-7 py-3.5 border border-white/15 text-white/80 hover:border-brand/50 hover:text-white transition font-semibold">
+            Explore Games
+          </button>
+        </div>
+        <div class="mt-10 pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-6">
+          <div><p class="text-2xl font-extrabold text-brand tabular-nums">৳12.4Cr+</p><p class="text-xs text-white/40 mt-1">Total paid out</p></div>
+          <div><p class="text-2xl font-extrabold tabular-nums">48,213</p><p class="text-xs text-white/40 mt-1">Players online</p></div>
+          <div><p class="text-2xl font-extrabold tabular-nums">2,500+</p><p class="text-xs text-white/40 mt-1">Licensed games</p></div>
+          <div><p class="text-2xl font-extrabold tabular-nums">5 min</p><p class="text-xs text-white/40 mt-1">Avg. withdrawal</p></div>
+        </div>
+      </div>
+
+      <!-- App preview mock -->
+      <div class="relative">
+        <div class="glass rounded-2xl border border-white/10 p-5 shadow-2xl">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-md bg-brand text-black font-black flex items-center justify-center text-xs">W</span>
+              <span class="font-bold text-sm">WIN<span class="text-brand"> 111</span> Lobby</span>
+            </div>
+            <span class="text-xs font-bold bg-brand/10 border border-brand/30 text-brand rounded-full px-3 py-1 tabular-nums">৳ 12,450.75</span>
+          </div>
+          <div class="rounded-xl bg-black/60 border border-white/5 p-4 mb-4 text-center">
+            <p class="text-[10px] tracking-[0.25em] text-white/40 font-semibold">LIVE MULTIPLIER</p>
+            <win-multiplier class="text-brand font-black text-glow tabular-nums text-4xl leading-none mt-1">128x</win-multiplier>
+          </div>
+          <div class="grid grid-cols-4 gap-2">
+            <div class="aspect-[3/4] rounded-lg bg-gradient-to-br from-rose-500 via-red-800 to-black flex items-center justify-center text-2xl">🔥</div>
+            <div class="aspect-[3/4] rounded-lg bg-gradient-to-br from-red-500 via-neutral-900 to-black flex items-center justify-center text-2xl">✈️</div>
+            <div class="aspect-[3/4] rounded-lg bg-gradient-to-br from-amber-400 via-orange-700 to-black flex items-center justify-center text-2xl">🐂</div>
+            <div class="aspect-[3/4] rounded-lg bg-gradient-to-br from-fuchsia-400 via-purple-950 to-black flex items-center justify-center text-2xl">🎡</div>
+          </div>
+          <div class="mt-4 flex items-center justify-between text-xs rounded-lg bg-brand/10 border border-brand/20 px-3 py-2">
+            <span class="text-white/70">Ra***7 just won</span>
+            <span class="font-bold text-brand tabular-nums">৳ 85,240</span>
+          </div>
+        </div>
+        <div class="absolute -bottom-5 -left-4 glass border border-brand/30 rounded-xl px-4 py-3 text-xs lime-glow rotate-[-3deg]">
+          <span class="text-white/60">Withdrawal to bKash</span> <b class="text-brand">completed • 2 min</b>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trusted-by / providers -->
+  <section class="border-y border-white/5 py-8 overflow-hidden">
+    <p class="text-center text-xs uppercase tracking-[0.25em] text-white/35 mb-6">2,500+ games from world-class providers</p>
+    <div class="marquee text-white/30 font-extrabold text-xl">
+      <span>JILI</span><span>PG SOFT</span><span>PRAGMATIC PLAY</span><span>EVOLUTION</span><span>SPRIBE</span><span>CQ9</span><span>GAMINGSOFT</span><span>WIN 111 ORIGINALS</span>
+      <span>JILI</span><span>PG SOFT</span><span>PRAGMATIC PLAY</span><span>EVOLUTION</span><span>SPRIBE</span><span>CQ9</span><span>GAMINGSOFT</span><span>WIN 111 ORIGINALS</span>
+    </div>
+  </section>
+
+  <!-- Features (mockup Features grid → WIN 111 game features) -->
+  <section id="features" class="max-w-6xl mx-auto px-4 py-20">
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-center tracking-tight">Built for Bangladeshi players</h2>
+    <p class="text-white/50 text-center mt-3 max-w-xl mx-auto">Every flow — deposit, play, withdraw — optimised for mobile-first play on any browser. No app download needed.</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
+      <div class="glass rounded-2xl border border-white/5 p-6 hover:border-brand/30 transition">
+        <div class="w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-2xl mb-4">⚡</div>
+        <h3 class="font-bold">Instant Deposits</h3>
+        <p class="text-sm text-white/50 mt-2">bKash, Nagad &amp; Rocket — funds credited to your wallet in under 60 seconds, 24/7.</p>
+      </div>
+      <div class="glass rounded-2xl border border-white/5 p-6 hover:border-brand/30 transition">
+        <div class="w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-2xl mb-4">🏧</div>
+        <h3 class="font-bold">5-Minute Withdrawals</h3>
+        <p class="text-sm text-white/50 mt-2">Fast approval pipeline straight to your mobile wallet. Minimum withdrawal just ৳500.</p>
+      </div>
+      <div class="glass rounded-2xl border border-white/5 p-6 hover:border-brand/30 transition">
+        <div class="w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-2xl mb-4">🎰</div>
+        <h3 class="font-bold">2,500+ Licensed Games</h3>
+        <p class="text-sm text-white/50 mt-2">Slots, crash, live casino, fishing &amp; sports from JILI, PG Soft, Pragmatic, Evolution and more.</p>
+      </div>
+      <div class="glass rounded-2xl border border-white/5 p-6 hover:border-brand/30 transition">
+        <div class="w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-2xl mb-4">🔐</div>
+        <h3 class="font-bold">Bank-Grade Security</h3>
+        <p class="text-sm text-white/50 mt-2">Certified RNG, verified KYC, encrypted transactions and full audit logging on every taka.</p>
+      </div>
+      <div class="glass rounded-2xl border border-white/5 p-6 hover:border-brand/30 transition">
+        <div class="w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-2xl mb-4">🤝</div>
+        <h3 class="font-bold">Referral Rewards</h3>
+        <p class="text-sm text-white/50 mt-2">Earn ৳200 for every friend's first deposit, plus lifetime commission on their play.</p>
+      </div>
+      <div class="glass rounded-2xl border border-white/5 p-6 hover:border-brand/30 transition">
+        <div class="w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center text-2xl mb-4">🎧</div>
+        <h3 class="font-bold">24/7 Bengali Support</h3>
+        <p class="text-sm text-white/50 mt-2">Live chat, WhatsApp and Telegram support in Bangla — real humans, around the clock.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIP tiers (mockup Pricing → VIP tiers) -->
+  <section id="vip" class="bg-surface/40 border-y border-white/5 py-20">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-center tracking-tight">VIP Club</h2>
+      <p class="text-white/50 text-center mt-3">Level up as you play. Higher tier = bigger cashback = faster payouts.</p>
+      <div class="grid md:grid-cols-3 gap-5 mt-12 items-stretch">
+        <div class="glass rounded-2xl border border-white/10 p-7 flex flex-col">
+          <p class="text-sm font-bold text-amber-500/90 uppercase tracking-widest">Bronze</p>
+          <p class="text-3xl font-black mt-2">Free</p>
+          <p class="text-xs text-white/40 mt-1">On registration</p>
+          <ul class="text-sm text-white/60 space-y-2.5 mt-6 flex-1">
+            <li>✔ 1% weekly cashback</li><li>✔ Standard withdrawals</li><li>✔ Welcome bonus 100%</li><li>✔ 24/7 chat support</li>
+          </ul>
+          <button data-open="auth-modal" class="mt-7 rounded-full border border-white/15 py-2.5 text-sm font-semibold hover:border-brand/50 transition">Join Free</button>
+        </div>
+        <div class="glass rounded-2xl border-2 border-brand p-7 flex flex-col lime-glow relative md:scale-[1.04]">
+          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand text-black text-[11px] font-black px-3 py-1 rounded-full">MOST POPULAR</span>
+          <p class="text-sm font-bold text-brand uppercase tracking-widest">Silver</p>
+          <p class="text-3xl font-black mt-2">৳10,000<span class="text-base font-semibold text-white/40">+ / mo</span></p>
+          <p class="text-xs text-white/40 mt-1">Total deposits</p>
+          <ul class="text-sm text-white/60 space-y-2.5 mt-6 flex-1">
+            <li>✔ 3% weekly cashback</li><li>✔ Priority withdrawals (under 10 min)</li><li>✔ Daily reload bonus 20%</li><li>✔ Birthday bonus ৳500</li><li>✔ Exclusive tournaments</li>
+          </ul>
+          <button data-open="auth-modal" class="mt-7 rounded-full bg-brand text-black py-2.5 text-sm font-bold hover:bg-brand-dim transition">Go Silver</button>
+        </div>
+        <div class="glass rounded-2xl border border-white/10 p-7 flex flex-col">
+          <p class="text-sm font-bold text-yellow-300/90 uppercase tracking-widest">Gold</p>
+          <p class="text-3xl font-black mt-2">Invite</p>
+          <p class="text-xs text-white/40 mt-1">৳1,00,000+ / mo</p>
+          <ul class="text-sm text-white/60 space-y-2.5 mt-6 flex-1">
+            <li>✔ 5% weekly cashback</li><li>✔ Dedicated VIP manager</li><li>✔ Instant withdrawals, raised limits</li><li>✔ Luxury gifts &amp; event invites</li>
+          </ul>
+          <button data-open="auth-modal" class="mt-7 rounded-full border border-white/15 py-2.5 text-sm font-semibold hover:border-brand/50 transition">Request Invite</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials (mockup Testimonials → player stories) -->
+  <section id="testimonials" class="max-w-6xl mx-auto px-4 py-20">
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-center tracking-tight">Real players. Real payouts.</h2>
+    <div class="grid md:grid-cols-3 gap-4 mt-12">
+      <div class="glass rounded-2xl border border-white/5 p-6">
+        <p class="text-brand text-sm">★★★★★</p>
+        <p class="text-sm text-white/70 mt-3 leading-relaxed">"Deposited ৳1,000 with bKash, hit a 214x on Super Ace, and the withdrawal reached my account before my tea got cold."</p>
+        <div class="flex items-center gap-3 mt-5">
+          <span class="w-9 h-9 rounded-full bg-gradient-to-br from-brand to-emerald-600 text-black font-bold flex items-center justify-center text-sm">R</span>
+          <div><p class="text-sm font-semibold">Rahim Uddin</p><p class="text-xs text-white/40">Dhaka • Won ৳2,14,000</p></div>
+        </div>
+      </div>
+      <div class="glass rounded-2xl border border-white/5 p-6">
+        <p class="text-brand text-sm">★★★★★</p>
+        <p class="text-sm text-white/70 mt-3 leading-relaxed">"The Aviator crash games are so smooth on my phone. Support answered in Bangla within 2 minutes at 2am!"</p>
+        <div class="flex items-center gap-3 mt-5">
+          <span class="w-9 h-9 rounded-full bg-gradient-to-br from-fuchsia-400 to-purple-700 text-black font-bold flex items-center justify-center text-sm">S</span>
+          <div><p class="text-sm font-semibold">Sumaiya Akter</p><p class="text-xs text-white/40">Chattogram • VIP Silver</p></div>
+        </div>
+      </div>
+      <div class="glass rounded-2xl border border-white/5 p-6">
+        <p class="text-brand text-sm">★★★★★</p>
+        <p class="text-sm text-white/70 mt-3 leading-relaxed">"Referred 6 friends — the referral bonuses alone paid for my Eid shopping. Withdrawals are genuinely instant."</p>
+        <div class="flex items-center gap-3 mt-5">
+          <span class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 text-black font-bold flex items-center justify-center text-sm">T</span>
+          <div><p class="text-sm font-semibold">Tanvir Hasan</p><p class="text-xs text-white/40">Sylhet • Referral champion</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA banner (mockup brand-bg CTA → lime glow CTA) -->
+  <section class="max-w-6xl mx-auto px-4 pb-20">
+    <div class="relative overflow-hidden rounded-3xl bg-brand text-black px-6 py-14 sm:px-14 text-center">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,.35),transparent_50%)]"></div>
+      <h2 class="relative text-3xl sm:text-4xl font-black tracking-tight">Start playing in 60 seconds</h2>
+      <p class="relative mt-3 font-medium opacity-80">মোবাইল নম্বর দিয়ে রেজিস্টার করুন — কোনো অ্যাপ ডাউনলোড লাগবে না।</p>
+      <button data-open="auth-modal" class="relative mt-8 bg-black text-brand font-bold rounded-full px-8 py-4 hover:scale-105 transition">
+        Register with Mobile Number →
+      </button>
+      <p class="relative mt-4 text-xs font-semibold opacity-60">bKash • Nagad • Rocket &nbsp;|&nbsp; Works on any browser &nbsp;|&nbsp; PWA installable</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-4 py-14 grid grid-cols-2 md:grid-cols-5 gap-10 text-sm">
+      <div class="col-span-2 md:col-span-1">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-7 h-7 rounded-md bg-brand text-black font-black flex items-center justify-center text-xs">W</span>
+          <span class="font-extrabold">WIN<span class="text-brand"> 111</span></span>
+        </div>
+        <p class="text-white/40 text-xs leading-relaxed">Bangladesh's trusted online gaming platform. Play smart, play safe.</p>
+        <div class="flex gap-2 mt-4">
+          <span class="text-[10px] font-bold bg-[#e2136e]/20 text-[#ff5c9e] border border-[#e2136e]/40 rounded px-2 py-1">bKash</span>
+          <span class="text-[10px] font-bold bg-[#f6921e]/20 text-[#ffb066] border border-[#f6921e]/40 rounded px-2 py-1">Nagad</span>
+          <span class="text-[10px] font-bold bg-[#8c3494]/20 text-[#c987d0] border border-[#8c3494]/40 rounded px-2 py-1">Rocket</span>
+        </div>
+      </div>
+      <div><p class="font-bold mb-4">Games</p><ul class="space-y-2.5 text-white/45"><li><a href="#" class="hover:text-brand transition">Slots</a></li><li><a href="#" class="hover:text-brand transition">Crash</a></li><li><a href="#" class="hover:text-brand transition">Live Casino</a></li><li><a href="#" class="hover:text-brand transition">Fishing</a></li><li><a href="#" class="hover:text-brand transition">Sports</a></li></ul></div>
+      <div><p class="font-bold mb-4">Platform</p><ul class="space-y-2.5 text-white/45"><li><a href="#" class="hover:text-brand transition">Promotions</a></li><li><a href="#vip" class="hover:text-brand transition">VIP Club</a></li><li><a href="#" class="hover:text-brand transition">Refer &amp; Earn</a></li><li><a href="#" class="hover:text-brand transition">Mobile (PWA)</a></li><li><a href="#" class="hover:text-brand transition">Support Center</a></li></ul></div>
+      <div><p class="font-bold mb-4">Legal</p><ul class="space-y-2.5 text-white/45"><li><a href="#" class="hover:text-brand transition">Terms of Service</a></li><li><a href="#" class="hover:text-brand transition">Privacy Policy</a></li><li><a href="#" class="hover:text-brand transition">Responsible Gaming</a></li><li><a href="#" class="hover:text-brand transition">KYC Policy</a></li></ul></div>
+      <div><p class="font-bold mb-4">Contact</p><ul class="space-y-2.5 text-white/45"><li>💬 24/7 Live Chat</li><li>📱 WhatsApp</li><li>✈️ Telegram</li><li>✉️ support@win 111.bet</li></ul></div>
+    </div>
+    <div class="border-t border-white/5 py-6 px-4">
+      <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/35">
+        <p>© 2026 WIN 111. All rights reserved.</p>
+        <p class="flex items-center gap-2"><span class="w-7 h-7 rounded-full border border-white/25 flex items-center justify-center font-bold">18+</span> Play responsibly. Self-exclusion available.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     VIEW 2 — LOBBY (authenticated app shell per Component Tree §4)
+═══════════════════════════════════════════════════════════════ -->
+<div id="view-lobby" class="hidden">
+
+  <!-- Top header -->
+  <header class="sticky top-0 z-40 glass border-b border-white/5">
+    <div class="max-w-[1600px] mx-auto flex items-center gap-3 px-3 sm:px-4 h-14">
+      <a class="flex items-center gap-2 shrink-0" href="#">
+        <span class="w-8 h-8 rounded-lg bg-brand text-black font-black flex items-center justify-center lime-glow text-sm">W</span>
+        <span class="font-extrabold tracking-tight text-lg hidden sm:block">WIN<span class="text-brand"> 111</span></span>
+      </a>
+      <!-- Global search (md+) -->
+      <div class="hidden md:flex flex-1 max-w-md">
+        <div class="w-full flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 focus-within:border-brand/50 transition">
+          <svg class="w-4 h-4 text-white/40" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input class="bg-transparent outline-none text-sm w-full placeholder-white/30" placeholder="Search 2,500+ games…">
+        </div>
+      </div>
+      <div class="flex-1 md:hidden"></div>
+      <!-- Balance chip -->
+      <button data-open="deposit-modal" class="flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 pl-3 pr-1 py-1 hover:bg-brand/20 transition">
+        <span class="text-sm font-bold tabular-nums">৳ 12,450<span class="text-white/50">.75</span></span>
+        <span class="text-[10px] font-bold bg-brand text-black rounded-full px-2 py-1">+ Deposit</span>
+      </button>
+      <!-- Notification bell (lg+) -->
+      <button class="relative hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-white/10 bg-white/5 hover:border-brand/40 transition">
+        <span>🔔</span><span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-black"></span>
+      </button>
+      <!-- Avatar -->
+      <button class="flex items-center gap-2">
+        <span class="w-9 h-9 rounded-full bg-gradient-to-br from-brand to-emerald-600 text-black font-bold flex items-center justify-center text-sm">R</span>
+        <span class="hidden xl:block text-sm font-semibold">Rahim</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="flex max-w-[1600px] mx-auto">
+
+    <!-- Left sidebar: md 64px collapsed rail, lg+ 220px expanded (PRD §2.1) -->
+    <aside class="hidden md:flex flex-col shrink-0 w-16 lg:w-[220px] sticky top-14 h-[calc(100vh-56px)] overflow-y-auto border-r border-white/5 bg-surface/40 py-4 px-2 lg:px-3">
+      <p class="hidden lg:block text-[10px] font-bold tracking-widest text-white/30 px-3 mb-2">MAIN</p>
+      <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-brand/15 text-brand font-semibold text-sm mb-1"><span class="text-lg">🏠</span><span class="hidden lg:block">Home</span></a>
+      <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white text-sm transition mb-1"><span class="text-lg">🎮</span><span class="hidden lg:block">All Games</span></a>
+      <p class="hidden lg:block text-[10px] font-bold tracking-widest text-white/30 px-3 mb-2 mt-4">GAMES</p>
+      <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white text-sm transition"><span class="text-lg">🎰</span><span class="hidden lg:block">Slots</span></a>
+      <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white text-sm transition"><span class="text-lg">🚀</span><span class="hidden lg:block">Crash</span></a>
+      <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white text-sm transition"><span class="text-lg">🎥</span><span class="hidden lg:block">Live Casino</span></a>
+      <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white text-sm transition"><span class="text-lg">🎣</span><span class="hidden lg:block">Fishing</span></a>
+      <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white text-sm transition"><span class="text-lg">🏆</span><span class="hidden lg:block">Sports</span></a>
+      <p class="hidden lg:block text-[10px] font-bold tracking-widest text-white/30 px-3 mb-2 mt-4">WALLET</p>
+      <button data-open="deposit-modal" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white text-sm transition w-full text-left"><span class="text-lg">💳</span><span class="hidden lg:block">Deposit</span></button>
+      <button data-open="withdraw-modal" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white text-sm transition w-full text-left"><span class="text-lg">🏧</span><span class="hidden lg:block">Withdraw</span></button>
+      <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white text-sm transition"><span class="text-lg">🎁</span><span class="hidden lg:block">Promotions</span></a>
+      <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white text-sm transition"><span class="text-lg">👑</span><span class="hidden lg:block">VIP Club</span></a>
+
+      <!-- Wallet widget (lg+ sticky bottom) -->
+      <div class="hidden lg:block mt-auto pt-4">
+        <div class="glass rounded-xl border border-white/10 p-4">
+          <p class="text-[10px] font-bold tracking-widest text-white/30">BALANCE</p>
+          <p class="text-xl font-extrabold tabular-nums mt-1">৳ 12,450.75</p>
+          <p class="text-xs text-white/40 mt-0.5">Bonus: <span class="text-brand font-semibold">৳ 500.00</span></p>
+          <button data-open="deposit-modal" class="w-full mt-3 bg-brand text-black text-sm font-bold rounded-lg py-2.5 hover:bg-brand-dim transition">Quick Deposit</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 min-w-0 px-3 sm:px-4 pb-28 md:pb-10">
+
+      <!-- Hero panel: multiplier | carousel | jackpot (PRD Phase 3 desktop three-panel) -->
+      <section class="grid gap-3 lg:grid-cols-[300px_minmax(0,1fr)_320px] mt-4">
+        <!-- Multiplier ticker (<win-multiplier> web component) -->
+        <div class="glass rounded-2xl border border-white/5 p-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(163,230,53,.08),transparent_70%)]"></div>
+          <p class="relative text-[11px] tracking-[0.2em] text-white/40 font-semibold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>TODAY'S TOP MULTIPLIER
+          </p>
+          <win-multiplier class="multiplier-big relative text-brand font-black text-glow tabular-nums leading-none mt-3">128x</win-multiplier>
+          <p class="relative text-xs text-white/40 mt-4">Fortune Ox • won by Ra***7, 2 min ago</p>
+        </div>
+
+        <!-- Banner carousel (auto-advance 4s) -->
+        <div class="relative rounded-2xl overflow-hidden border border-white/5 h-[230px] md:h-[260px] lg:h-[280px] bg-surface">
+          <div class="hero-slide absolute inset-0 transition-opacity duration-700 bg-gradient-to-br from-emerald-700 via-emerald-950 to-black p-6 sm:p-8 flex flex-col justify-center">
+            <span class="w-fit text-[10px] font-black tracking-widest bg-brand text-black rounded-full px-2.5 py-1">WELCOME OFFER</span>
+            <h3 class="text-2xl sm:text-3xl font-black mt-3">প্রথম ডিপোজিটে <span class="text-brand">১০০% বোনাস!</span></h3>
+            <p class="text-sm text-white/60 mt-2">Deposit ৳500, get up to ৳10,000 bonus instantly.</p>
+            <button data-open="deposit-modal" class="w-fit mt-4 bg-brand text-black text-sm font-bold rounded-full px-5 py-2.5 hover:bg-brand-dim transition">Claim Now →</button>
+          </div>
+          <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-0 bg-gradient-to-br from-fuchsia-700 via-purple-950 to-black p-6 sm:p-8 flex flex-col justify-center">
+            <span class="w-fit text-[10px] font-black tracking-widest bg-white text-black rounded-full px-2.5 py-1">DAILY CASHBACK</span>
+            <h3 class="text-2xl sm:text-3xl font-black mt-3">দৈনিক <span class="text-brand">১০% ক্যাশব্যাক</span></h3>
+            <p class="text-sm text-white/60 mt-2">On slots &amp; live casino losses — no wagering requirement.</p>
+            <button class="w-fit mt-4 bg-white text-black text-sm font-bold rounded-full px-5 py-2.5 hover:bg-white/80 transition">Learn More</button>
+          </div>
+          <div class="hero-slide absolute inset-0 transition-opacity duration-700 opacity-0 bg-gradient-to-br from-sky-600 via-blue-950 to-black p-6 sm:p-8 flex flex-col justify-center">
+            <span class="w-fit text-[10px] font-black tracking-widest bg-brand text-black rounded-full px-2.5 py-1">REFER &amp; EARN</span>
+            <h3 class="text-2xl sm:text-3xl font-black mt-3">রেফার করুন, <span class="text-brand">আয় করুন</span></h3>
+            <p class="text-sm text-white/60 mt-2">Get ৳200 for every friend's first deposit + lifetime commission.</p>
+            <button class="w-fit mt-4 bg-brand text-black text-sm font-bold rounded-full px-5 py-2.5 hover:bg-brand-dim transition">Invite Friends</button>
+          </div>
+          <button onclick="goSlide(curSlide-1)" class="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/40 border border-white/10 items-center justify-center hover:border-brand/50 transition">‹</button>
+          <button onclick="goSlide(curSlide+1)" class="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/40 border border-white/10 items-center justify-center hover:border-brand/50 transition">›</button>
+          <div id="slideDots" class="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-1.5"></div>
+        </div>
+
+        <!-- Live jackpot feed (lg+ right panel) -->
+        <div class="glass rounded-2xl border border-white/5 p-4 hidden lg:flex flex-col">
+          <div class="flex items-center justify-between">
+            <p class="text-[11px] tracking-[0.2em] text-white/50 font-bold flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>LIVE WINS</p>
+            <p class="text-[11px] text-white/35">Last hour: <b class="text-white/70">৳4.2M</b></p>
+          </div>
+          <div class="rounded-xl bg-black/60 border border-brand/20 px-4 py-3 mt-3 text-center">
+            <p class="text-[10px] tracking-[0.25em] text-white/40 font-semibold">JACKPOT POOL</p>
+            <p id="jackpotVal" class="text-2xl font-black text-brand tabular-nums text-glow">৳ 1,24,83,920</p>
+          </div>
+          <ul id="winFeed" class="mt-3 space-y-2 flex-1 overflow-hidden"></ul>
+        </div>
+      </section>
+
+      <!-- Category pills (sticky on scroll) -->
+      <div class="sticky top-14 z-30 glass -mx-3 sm:-mx-4 px-3 sm:px-4 py-3 mt-6 border-b border-white/5">
+        <div class="flex gap-2 overflow-x-auto no-scrollbar">
+          <button class="cat-pill pill-active whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/70 transition" data-filter="all">🔥 All</button>
+          <button class="cat-pill whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/70 transition" data-filter="slots">🎰 Slots</button>
+          <button class="cat-pill whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/70 transition" data-filter="crash">🚀 Crash</button>
+          <button class="cat-pill whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/70 transition" data-filter="live">🎥 Live</button>
+          <button class="cat-pill whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/70 transition" data-filter="fishing">🎣 Fishing</button>
+          <button class="cat-pill whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/70 transition" data-filter="table">🃏 Table</button>
+          <button class="cat-pill whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/70 transition" data-filter="hot">⭐ Hot</button>
+          <button class="cat-pill whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/70 transition" data-filter="new">✨ New</button>
+        </div>
+      </div>
+
+      <!-- Game grid: 3:4 cards, 2→3→4→5→7 columns (PRD §2.1) -->
+      <section id="gameGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-7 gap-3 mt-5"></section>
+
+      <!-- Hot promotions -->
+      <section class="mt-10">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-lg font-bold">🔥 Hot Promotions</h2>
+          <a href="#" class="text-brand text-sm font-semibold hover:underline">View all →</a>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div class="rounded-2xl border border-brand/25 bg-gradient-to-br from-brand/15 to-transparent p-5">
+            <p class="text-[10px] font-black tracking-widest text-brand">WELCOME</p>
+            <h3 class="font-bold mt-1">100% Bonus up to ৳10,000</h3>
+            <p class="text-xs text-white/45 mt-1">On your first deposit. 15x wagering.</p>
+            <button data-open="deposit-modal" class="mt-4 bg-brand text-black text-xs font-bold rounded-full px-4 py-2 hover:bg-brand-dim transition">Claim Now</button>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-gradient-to-br from-fuchsia-500/10 to-transparent p-5">
+            <p class="text-[10px] font-black tracking-widest text-fuchsia-300">DAILY</p>
+            <h3 class="font-bold mt-1">10% Cashback, Every Day</h3>
+            <p class="text-xs text-white/45 mt-1">Auto-credited at midnight. No wagering.</p>
+            <button class="mt-4 border border-white/15 text-xs font-bold rounded-full px-4 py-2 hover:border-brand/50 transition">Learn More</button>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-gradient-to-br from-sky-500/10 to-transparent p-5">
+            <p class="text-[10px] font-black tracking-widest text-sky-300">REFERRAL</p>
+            <h3 class="font-bold mt-1">Invite Friends, Earn ৳200 Each</h3>
+            <p class="text-xs text-white/45 mt-1">Plus 1% lifetime commission on their play.</p>
+            <button class="mt-4 border border-white/15 text-xs font-bold rounded-full px-4 py-2 hover:border-brand/50 transition">Get My Code</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lobby footer -->
+      <footer class="mt-12 border-t border-white/5 pt-6 pb-2 text-center text-xs text-white/30 space-y-2">
+        <p>18+ • Play responsibly • Deposit limits &amp; self-exclusion available in Account → Responsible Gaming</p>
+        <p>© 2026 WIN 111 — UI mockup for design review</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Bottom nav (xs/sm only) with raised Deposit FAB -->
+  <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 glass border-t border-white/10" style="padding-bottom:env(safe-area-inset-bottom)">
+    <div class="grid grid-cols-5 h-16 items-center text-[10px] font-medium">
+      <button class="flex flex-col items-center gap-0.5 text-brand"><span class="text-xl">🏠</span>Home</button>
+      <button class="flex flex-col items-center gap-0.5 text-white/50"><span class="text-xl">🎮</span>Games</button>
+      <div class="relative flex flex-col items-center justify-end pb-1">
+        <button data-open="deposit-modal" class="fab absolute -top-1 rounded-full bg-brand text-black text-2xl lime-glow active:scale-95 transition flex items-center justify-center">💳</button>
+        <span class="text-white/50">Deposit</span>
+      </div>
+      <button data-open="withdraw-modal" class="flex flex-col items-center gap-0.5 text-white/50"><span class="text-xl">🏧</span>Withdraw</button>
+      <button class="flex flex-col items-center gap-0.5 text-white/50"><span class="text-xl">👤</span>Account</button>
+    </div>
+  </nav>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     MODALS (bottom-sheet on xs/sm → centered dialog on md+)
+═══════════════════════════════════════════════════════════════ -->
+
+<!-- Auth modal -->
+<div id="auth-modal" class="modal-root hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-close></div>
+  <div class="relative w-full sm:max-w-sm glass border border-white/10 rounded-t-2xl sm:rounded-2xl p-6 max-h-[92vh] overflow-y-auto">
+    <button data-close class="absolute top-4 right-4 text-white/40 hover:text-white">✕</button>
+    <div class="flex items-center gap-2 mb-5">
+      <span class="w-8 h-8 rounded-lg bg-brand text-black font-black flex items-center justify-center text-sm">W</span>
+      <span class="font-extrabold">WIN<span class="text-brand"> 111</span></span>
+    </div>
+    <div class="grid grid-cols-2 gap-1 rounded-full bg-white/5 p-1 mb-6 text-sm font-semibold">
+      <button id="tab-login" onclick="authTab('login')" class="rounded-full py-2 bg-brand text-black transition">Login</button>
+      <button id="tab-register" onclick="authTab('register')" class="rounded-full py-2 text-white/60 transition">Register</button>
+    </div>
+    <form id="form-login" onsubmit="doAuth(event)" class="space-y-3">
+      <input required class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm outline-none focus:border-brand/60 transition" placeholder="Phone (+880 1XXX-XXXXXX)">
+      <input required type="password" class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm outline-none focus:border-brand/60 transition" placeholder="Password">
+      <button class="w-full bg-brand text-black font-bold rounded-xl py-3 hover:bg-brand-dim transition">Login</button>
+      <p class="text-center text-xs text-white/40">Forgot password? <a href="#" class="text-brand">Reset via OTP</a></p>
+    </form>
+    <form id="form-register" onsubmit="doAuth(event)" class="space-y-3 hidden">
+      <input required class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm outline-none focus:border-brand/60 transition" placeholder="Phone (+880 1XXX-XXXXXX)">
+      <p class="text-[11px] text-white/40 -mt-1">📲 We'll send a 6-digit OTP to verify your number.</p>
+      <input required type="password" class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm outline-none focus:border-brand/60 transition" placeholder="Create password">
+      <input class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm outline-none focus:border-brand/60 transition" placeholder="Referral code (optional)">
+      <label class="flex items-start gap-2 text-[11px] text-white/50"><input type="checkbox" required class="mt-0.5 accent-[#a3e635]"> I am 18+ and agree to the Terms of Service &amp; Responsible Gaming policy.</label>
+      <button class="w-full bg-brand text-black font-bold rounded-xl py-3 hover:bg-brand-dim transition">Create Account — Get 100% Bonus 🎁</button>
+    </form>
+  </div>
+</div>
+
+<!-- Deposit modal -->
+<div id="deposit-modal" class="modal-root hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-close></div>
+  <div class="relative w-full sm:max-w-md glass border border-white/10 rounded-t-2xl sm:rounded-2xl p-6 max-h-[92vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-5">
+      <h3 class="text-lg font-bold">💳 Deposit</h3>
+      <button data-close class="text-white/40 hover:text-white">✕</button>
+    </div>
+    <p class="text-xs font-semibold text-white/40 mb-2">PAYMENT METHOD</p>
+    <div class="grid grid-cols-3 gap-2 mb-5">
+      <button class="dep-method rounded-xl border-2 border-brand bg-white/5 py-3 text-sm font-bold flex flex-col items-center gap-1" data-method="bKash"><span class="w-3 h-3 rounded-full bg-[#e2136e]"></span>bKash</button>
+      <button class="dep-method rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-bold flex flex-col items-center gap-1 opacity-70" data-method="Nagad"><span class="w-3 h-3 rounded-full bg-[#f6921e]"></span>Nagad</button>
+      <button class="dep-method rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-bold flex flex-col items-center gap-1 opacity-70" data-method="Rocket"><span class="w-3 h-3 rounded-full bg-[#8c3494]"></span>Rocket</button>
+    </div>
+    <p class="text-xs font-semibold text-white/40 mb-2">AMOUNT</p>
+    <div class="grid grid-cols-3 gap-2 mb-3">
+      <button class="dep-amt rounded-lg border border-white/10 bg-white/5 py-2.5 text-sm font-semibold hover:border-brand/50 transition" data-amt="500">৳500</button>
+      <button class="dep-amt rounded-lg border-2 border-brand bg-brand/10 py-2.5 text-sm font-semibold" data-amt="1000">৳1,000</button>
+      <button class="dep-amt rounded-lg border border-white/10 bg-white/5 py-2.5 text-sm font-semibold hover:border-brand/50 transition" data-amt="2000">৳2,000</button>
+      <button class="dep-amt rounded-lg border border-white/10 bg-white/5 py-2.5 text-sm font-semibold hover:border-brand/50 transition" data-amt="5000">৳5,000</button>
+      <button class="dep-amt rounded-lg border border-white/10 bg-white/5 py-2.5 text-sm font-semibold hover:border-brand/50 transition" data-amt="10000">৳10,000</button>
+      <button class="dep-amt rounded-lg border border-white/10 bg-white/5 py-2.5 text-sm font-semibold hover:border-brand/50 transition" data-amt="20000">৳20,000</button>
+    </div>
+    <div class="flex items-center rounded-xl bg-white/5 border border-white/10 focus-within:border-brand/60 transition mb-3">
+      <span class="pl-4 text-white/40 font-bold">৳</span>
+      <input id="depAmount" type="number" value="1000" min="100" class="bg-transparent w-full px-3 py-3 text-sm outline-none tabular-nums">
+    </div>
+    <p class="text-[11px] text-brand bg-brand/10 border border-brand/20 rounded-lg px-3 py-2 mb-4">🎁 Deposits of ৳1,000+ qualify for the 100% welcome bonus.</p>
+    <input class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm outline-none focus:border-brand/60 transition mb-4" placeholder="Your bKash sender number (01XXX-XXXXXX)">
+    <div class="flex justify-between text-xs text-white/40 mb-4"><span>Fee: <b class="text-white/70">৳0</b></span><span>Total: <b id="depTotal" class="text-brand">৳1,000</b></span></div>
+    <button onclick="submitDeposit()" class="w-full bg-brand text-black font-bold rounded-xl py-3.5 lime-glow hover:bg-brand-dim transition">Confirm Deposit</button>
+    <p class="text-center text-[10px] text-white/30 mt-3">Secured by merchant API • Funds credit in under 60 seconds</p>
+  </div>
+</div>
+
+<!-- Withdraw modal -->
+<div id="withdraw-modal" class="modal-root hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-close></div>
+  <div class="relative w-full sm:max-w-md glass border border-white/10 rounded-t-2xl sm:rounded-2xl p-6 max-h-[92vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-5">
+      <h3 class="text-lg font-bold">🏧 Withdraw</h3>
+      <button data-close class="text-white/40 hover:text-white">✕</button>
+    </div>
+    <div class="rounded-xl bg-black/50 border border-white/10 p-4 mb-4 flex justify-between items-center">
+      <div><p class="text-[10px] tracking-widest text-white/35 font-bold">AVAILABLE BALANCE</p><p class="text-xl font-extrabold tabular-nums mt-0.5">৳ 12,450.75</p></div>
+      <div class="text-right"><p class="text-[10px] tracking-widest text-white/35 font-bold">BONUS</p><p class="text-sm font-bold text-brand tabular-nums mt-0.5">৳ 500.00</p></div>
+    </div>
+    <input type="number" value="2000" min="500" class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm outline-none focus:border-brand/60 transition tabular-nums mb-3" placeholder="Amount (min ৳500)">
+    <div class="grid grid-cols-3 gap-2 mb-4">
+      <button class="rounded-xl border-2 border-brand bg-white/5 py-3 text-sm font-bold">bKash</button>
+      <button class="rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-bold opacity-70">Nagad</button>
+      <button class="rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-bold opacity-70">Rocket</button>
+    </div>
+    <input class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm outline-none focus:border-brand/60 transition mb-4" placeholder="Receiver wallet number (01XXX-XXXXXX)">
+    <p class="text-[11px] text-white/40 bg-white/5 rounded-lg px-3 py-2 mb-4">⏱ Withdrawals are reviewed and processed within 5–15 minutes. KYC verification required for first withdrawal.</p>
+    <button onclick="toast('✅ Withdrawal request submitted — status: pending approval (mockup)')" class="w-full bg-brand text-black font-bold rounded-xl py-3.5 hover:bg-brand-dim transition">Request Withdrawal</button>
+  </div>
+</div>
+
+<!-- Mockup view switcher -->
+<div class="fixed bottom-20 md:bottom-4 left-4 z-[60] glass border border-white/10 rounded-full p-1 flex text-xs font-bold shadow-xl">
+  <button id="sw-landing" onclick="showView('landing')" class="px-3.5 py-1.5 rounded-full bg-brand text-black transition">🏠 Landing</button>
+  <button id="sw-lobby" onclick="showView('lobby')" class="px-3.5 py-1.5 rounded-full text-white/60 transition">🎮 Lobby</button>
+</div>
+
+<script>
+/* ── View switching ─────────────────────────────────────── */
+function showView(v) {
+  document.getElementById('view-landing').classList.toggle('hidden', v !== 'landing');
+  document.getElementById('view-lobby').classList.toggle('hidden', v !== 'lobby');
+  const on = (id, active) => { const b = document.getElementById(id); b.className = 'px-3.5 py-1.5 rounded-full transition ' + (active ? 'bg-brand text-black' : 'text-white/60'); };
+  on('sw-landing', v === 'landing'); on('sw-lobby', v === 'lobby');
+  window.scrollTo(0, 0);
+}
+
+/* ── <win-multiplier> web component (production: custom element) ── */
+class WinMultiplier extends HTMLElement {
+  connectedCallback() { this._v = 52 + Math.random() * 150; this._draw(); this._iv = setInterval(() => this._retarget(), 2800); }
+  disconnectedCallback() { clearInterval(this._iv); cancelAnimationFrame(this._raf); }
+  _retarget() {
+    const from = this._v, to = 52 + Math.pow(Math.random(), 2.5) * 2448; /* PRD: 52–2500x range */
+    const t0 = performance.now(), dur = 900;
+    const step = t => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); this._v = from + (to - from) * e; this._draw(); if (k < 1) this._raf = requestAnimationFrame(step); };
+    this._raf = requestAnimationFrame(step);
+  }
+  _draw() { this.textContent = Math.round(this._v).toLocaleString('en-IN') + 'x'; }
+}
+customElements.define('win-multiplier', WinMultiplier);
+
+/* ── Games catalogue (mock of gs_games / GET /games) ────── */
+const GAMES = [
+  { n:'Super Ace',        p:'JILI',          c:'slots',  e:'🔥', r:'97.0', g:'from-rose-500 via-red-800 to-black',       t:'hot' },
+  { n:'Aviator',          p:'Spribe',        c:'crash',  e:'✈️', r:'97.0', g:'from-red-500 via-neutral-900 to-black',    t:'hot' },
+  { n:'Fortune Ox',       p:'PG Soft',       c:'slots',  e:'🐂', r:'96.8', g:'from-amber-400 via-orange-700 to-black',   t:'hot' },
+  { n:'Gates of Olympus', p:'Pragmatic Play',c:'slots',  e:'⚡', r:'96.5', g:'from-sky-400 via-indigo-800 to-black' },
+  { n:'Crazy Time',       p:'Evolution',     c:'live',   e:'🎡', r:'96.1', g:'from-fuchsia-400 via-purple-950 to-black', t:'hot' },
+  { n:'Sweet Bonanza',    p:'Pragmatic Play',c:'slots',  e:'🍭', r:'96.5', g:'from-pink-400 via-fuchsia-800 to-black' },
+  { n:'Fishing God',      p:'JILI',          c:'fishing',e:'🐠', r:'97.2', g:'from-teal-300 via-cyan-900 to-black',      t:'hot' },
+  { n:'Money Coming',     p:'JILI',          c:'slots',  e:'💰', r:'97.1', g:'from-emerald-400 via-green-800 to-black',  t:'new' },
+  { n:'Spaceman',         p:'Pragmatic Play',c:'crash',  e:'👨‍🚀', r:'96.5', g:'from-violet-500 via-purple-950 to-black' },
+  { n:'Lightning Roulette',p:'Evolution',    c:'live',   e:'🎯', r:'97.3', g:'from-indigo-400 via-slate-900 to-black' },
+  { n:'Dragon Gold',      p:'PG Soft',       c:'slots',  e:'🐲', r:'96.7', g:'from-yellow-300 via-amber-700 to-black',   t:'new' },
+  { n:'Color Game',       p:'WIN 111',        c:'table',  e:'🎨', r:'96.9', g:'from-brand via-emerald-950 to-black',      t:'hot' },
+  { n:'Ocean King',       p:'CQ9',           c:'fishing',e:'🦈', r:'96.8', g:'from-blue-400 via-blue-950 to-black' },
+  { n:'Crash Royale',     p:'WIN 111',        c:'crash',  e:'🚀', r:'97.0', g:'from-lime-300 via-emerald-900 to-black',   t:'new' },
+  { n:'Boxing King',      p:'JILI',          c:'slots',  e:'🥊', r:'96.6', g:'from-red-400 via-rose-900 to-black' },
+  { n:'Mega Wheel',       p:'Pragmatic Live',c:'live',   e:'🎪', r:'96.5', g:'from-orange-400 via-red-950 to-black' },
+  { n:'Big Bass Bonanza', p:'Pragmatic Play',c:'slots',  e:'🎣', r:'96.7', g:'from-cyan-400 via-blue-900 to-black' },
+  { n:'Dragon Tiger',     p:'Evolution',     c:'table',  e:'🐯', r:'96.3', g:'from-amber-500 via-stone-900 to-black' },
+  { n:'Limbo',            p:'WIN 111',        c:'crash',  e:'📈', r:'99.0', g:'from-teal-400 via-teal-950 to-black',      t:'new' },
+  { n:'Happy Fishing',    p:'JILI',          c:'fishing',e:'🐟', r:'96.9', g:'from-sky-300 via-teal-900 to-black',       t:'new' },
+  { n:'Baccarat Deluxe',  p:'Evolution',     c:'live',   e:'🃏', r:'98.8', g:'from-zinc-300 via-zinc-800 to-black' },
+];
+const grid = document.getElementById('gameGrid');
+function renderGames(filter = 'all') {
+  const list = GAMES.filter(g => filter === 'all' ? true : (filter === 'hot' || filter === 'new') ? g.t === filter : g.c === filter);
+  grid.innerHTML = list.map(g => `
+    <div class="game-card group relative aspect-[3/4] rounded-xl overflow-hidden border border-white/5 bg-surface2 cursor-pointer transition duration-200 hover:scale-105 hover:border-brand/40 hover:z-10" data-name="${g.n}">
+      <div class="absolute inset-0 bg-gradient-to-br ${g.g}"></div>
+      <div class="absolute inset-0 flex items-center justify-center text-5xl sm:text-6xl drop-shadow-[0_6px_18px_rgba(0,0,0,.65)]">${g.e}</div>
+      ${g.t ? `<span class="absolute top-2 left-2 z-10 text-[9px] font-black tracking-wide px-1.5 py-0.5 rounded ${g.t === 'hot' ? 'bg-red-500 text-white' : 'bg-brand text-black'}">${g.t.toUpperCase()}</span>` : ''}
+      <div class="absolute inset-0 z-10 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/50">
+        <span class="w-12 h-12 rounded-full bg-brand text-black flex items-center justify-center text-lg lime-glow">▶</span>
+      </div>
+      <div class="absolute bottom-0 inset-x-0 z-10 p-2 bg-gradient-to-t from-black/95 via-black/60 to-transparent">
+        <p class="text-xs sm:text-sm font-semibold truncate">${g.n}</p>
+        <p class="text-[10px] text-white/50 flex justify-between"><span>${g.p}</span><span>RTP ${g.r}%</span></p>
+      </div>
+    </div>`).join('');
+}
+grid.addEventListener('click', e => {
+  const c = e.target.closest('.game-card');
+  if (c) toast(`🚀 Launching "${c.dataset.name}" via GS Connect… (mockup)`);
+});
+renderGames();
+
+/* ── Category pills ─────────────────────────────────────── */
+document.querySelectorAll('.cat-pill').forEach(p => p.addEventListener('click', () => {
+  document.querySelectorAll('.cat-pill').forEach(x => x.classList.remove('pill-active'));
+  p.classList.add('pill-active');
+  renderGames(p.dataset.filter);
+}));
+
+/* ── Banner carousel (auto-advance 4s, PRD Phase 1) ─────── */
+const slides = [...document.querySelectorAll('.hero-slide')];
+const dotsWrap = document.getElementById('slideDots');
+let curSlide = 0, slideTimer;
+slides.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'h-1.5 rounded-full transition-all';
+  d.onclick = () => goSlide(i);
+  dotsWrap.appendChild(d);
+});
+function goSlide(i) {
+  curSlide = (i + slides.length) % slides.length;
+  slides.forEach((s, j) => { s.style.opacity = j === curSlide ? 1 : 0; s.style.zIndex = j === curSlide ? 1 : 0; });
+  [...dotsWrap.children].forEach((d, j) => d.className = 'h-1.5 rounded-full transition-all ' + (j === curSlide ? 'w-6 bg-brand' : 'w-1.5 bg-white/30'));
+  clearInterval(slideTimer); slideTimer = setInterval(() => goSlide(curSlide + 1), 4000);
+}
+goSlide(0);
+
+/* ── Live jackpot counter + wins feed ───────────────────── */
+const fmt = n => '৳ ' + Math.round(n).toLocaleString('en-IN');
+let jackpot = 12483920;
+setInterval(() => { jackpot += 37 + Math.random() * 700; document.getElementById('jackpotVal').textContent = fmt(jackpot); }, 700);
+const NAMES = ['Ra***7','Su***2','Ta***9','Nu***4','Me***1','Fa***8','Sa***3','Ri***6','Ar***5','Jo***8'];
+const FEED = ['Super Ace','Aviator','Fortune Ox','Gates of Olympus','Crazy Time','Fishing God','Money Coming','Color Game','Spaceman'];
+function addWin() {
+  const ul = document.getElementById('winFeed'); if (!ul) return;
+  const amt = Math.round((500 + Math.pow(Math.random(), 2) * 85000) / 10) * 10;
+  const li = document.createElement('li');
+  li.className = 'win-in flex items-center justify-between gap-2 rounded-lg bg-white/5 border border-white/5 px-3 py-2 text-xs';
+  li.innerHTML = `<span class="flex items-center gap-2 min-w-0"><span class="w-6 h-6 shrink-0 rounded-full bg-brand/15 text-brand font-bold flex items-center justify-center text-[10px]">${NAMES[Math.floor(Math.random()*NAMES.length)][0]}</span><span class="truncate"><b>${NAMES[Math.floor(Math.random()*NAMES.length)]}</b><span class="text-white/35"> • ${FEED[Math.floor(Math.random()*FEED.length)]}</span></span></span><b class="text-brand tabular-nums shrink-0">+${fmt(amt).slice(2)}</b>`;
+  ul.prepend(li);
+  while (ul.children.length > 6) ul.lastChild.remove();
+}
+for (let i = 0; i < 5; i++) addWin();
+setInterval(addWin, 3200);
+
+/* ── Modal open/close ───────────────────────────────────── */
+document.addEventListener('click', e => {
+  const open = e.target.closest('[data-open]');
+  if (open) { document.getElementById(open.dataset.open)?.classList.remove('hidden'); return; }
+  const close = e.target.closest('[data-close]');
+  if (close) close.closest('.modal-root')?.classList.add('hidden');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-root:not(.hidden)').forEach(m => m.classList.add('hidden'));
+});
+
+/* ── Auth modal tabs ────────────────────────────────────── */
+function authTab(t) {
+  document.getElementById('form-login').classList.toggle('hidden', t !== 'login');
+  document.getElementById('form-register').classList.toggle('hidden', t !== 'register');
+  const on = 'rounded-full py-2 bg-brand text-black transition', off = 'rounded-full py-2 text-white/60 transition';
+  document.getElementById('tab-login').className = t === 'login' ? on : off;
+  document.getElementById('tab-register').className = t === 'register' ? on : off;
+}
+function doAuth(e) {
+  e.preventDefault();
+  document.getElementById('auth-modal').classList.add('hidden');
+  showView('lobby');
+  toast('✅ Welcome back, Rahim! Balance synced via WebSocket (mockup)');
+}
+
+/* ── Deposit modal logic ────────────────────────────────── */
+let depMethod = 'bKash';
+document.querySelectorAll('.dep-method').forEach(b => b.addEventListener('click', () => {
+  depMethod = b.dataset.method;
+  document.querySelectorAll('.dep-method').forEach(x => { x.classList.remove('border-2','border-brand','opacity-100'); x.classList.add('border','border-white/10','opacity-70'); });
+  b.classList.remove('border','border-white/10','opacity-70'); b.classList.add('border-2','border-brand','opacity-100');
+}));
+document.querySelectorAll('.dep-amt').forEach(b => b.addEventListener('click', () => {
+  document.getElementById('depAmount').value = b.dataset.amt;
+  document.querySelectorAll('.dep-amt').forEach(x => x.classList.remove('border-2','border-brand','bg-brand/10'));
+  b.classList.add('border-2','border-brand','bg-brand/10');
+  updateTotal();
+}));
+function updateTotal() { document.getElementById('depTotal').textContent = '৳' + Number(document.getElementById('depAmount').value || 0).toLocaleString('en-IN'); }
+document.getElementById('depAmount').addEventListener('input', updateTotal);
+function submitDeposit() {
+  const amt = Number(document.getElementById('depAmount').value || 0);
+  document.getElementById('deposit-modal').classList.add('hidden');
+  toast(`💳 Deposit of ৳${amt.toLocaleString('en-IN')} via ${depMethod} initiated — awaiting gateway callback (mockup)`);
+}
+
+/* ── Toasts ─────────────────────────────────────────────── */
+function toast(msg) {
+  const t = document.createElement('div');
+  t.className = 'fixed top-20 right-4 z-[70] glass border border-brand/30 text-sm px-4 py-3 rounded-xl lime-glow max-w-xs win-in';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.transition = 'opacity .4s'; t.style.opacity = 0; setTimeout(() => t.remove(), 400); }, 2800);
+}
+</script>
+</body>
+</html>
