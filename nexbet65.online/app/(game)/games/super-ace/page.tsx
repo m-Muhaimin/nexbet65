@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { GameBridge } from "@/components/game-bridge";
+
 export const metadata: Metadata = {
   title: "SuperAce",
   description:
@@ -9,12 +11,5 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default function SuperAcePage() {
-  return (
-    <iframe
-      title="SuperAce Game"
-      src="/games/super-ace/index.html"
-      className="h-full w-full border-none"
-      allow="autoplay"
-    />
-  );
+  return <GameBridge gameId="superace" />;
 }

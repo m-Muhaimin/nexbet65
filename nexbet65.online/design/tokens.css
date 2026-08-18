@@ -2,6 +2,7 @@
    NexBet65 Platform — Design Tokens (root copy)
    Canonical: X:\nexbet65\DESIGN_TOKENS.css
    Aligned with superace-frontend gold-navy design system.
+   Extended with MVP Blueprint accent colours.
    ============================================================ */
 :root {
   /* Brand primary (gold) — canonical */
@@ -15,6 +16,13 @@
   --color-gold-deep: 36 76% 31%;          /* #8a5a12 */
   --color-gold-border: 44 54% 51%;        /* #c9a43c */
 
+  /* Royal Gold (MVP Blueprint) */
+  --color-royal-gold: 43 74% 49%;         /* #C89B3C */
+
+  /* Emerald accent (MVP Blueprint) */
+  --color-emerald: 169 69% 51%;           /* #19C6A3 */
+  --color-emerald-dim: 169 50% 35%;       /* #127a68 */
+
   /* Player colours */
   --color-pink: 340 85% 57%;              /* #ff2e88 */
   --color-cyan: 191 87% 64%;              /* #1fe0ff */
@@ -26,8 +34,11 @@
   --color-navy-surface: 215 37% 14%;      /* #1a2a44 */
   --color-navy-border: 215 30% 18%;       /* #22304a */
 
+  /* Obsidian (MVP Blueprint) */
+  --color-obsidian: 240 8% 6%;            /* #0B0B12 */
+
   /* Utility colours */
-  --color-success: 120 60% 50%;
+  --color-success: 169 69% 51%;           /* Emerald #19C6A3 */
   --color-destructive: 0 84% 60%;
 
   /* Border & ring */

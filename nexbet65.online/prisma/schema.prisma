@@ -25,6 +25,7 @@ model WinUser {
   updatedAt    DateTime         @updatedAt
   transactions WinTransaction[]
   gameState    WinGameState?
+  gameSessions WinGameSession[]
   referredBy   WinUser?         @relation("Referrals", fields: [referredById], references: [id], onDelete: SetNull)
   referrals    WinUser[]        @relation("Referrals")
   p2pTransactions P2PTransaction[]
@@ -58,6 +59,29 @@ model WinGameState {
   user WinUser @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+// Game sessions — one row per iframe load. The parent generates a short-lived
+// JWT (15 min TTL) that the game iframe uses to authenticate settle calls.
+// Every BET / WIN settlement references this session for audit trail.
+model WinGameSession {
+  id          String   @id @default(cuid())
+  userId      String
+  gameId      String   @default("superace") // superace | aviator | mines | …
+  status      String   @default("active")   // active | settled | expired
+  totalBet    Decimal  @default(0) @db.Decimal(16, 2)
+  totalWin    Decimal  @default(0) @db.Decimal(16, 2)
+  spinCount   Int      @default(0)
+  tokenHash   String   @unique              // sha256 of the JWT — never store raw token
+  expiresAt   DateTime                      // TTL enforcement
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user WinUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([expiresAt])
 }
 
 model WinTransaction {

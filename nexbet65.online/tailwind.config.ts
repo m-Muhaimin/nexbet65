@@ -35,11 +35,16 @@ const config = {
    			]
    		},
 colors: {
-   			brand: {
-   				DEFAULT: '#f6b01a',
-   				dim: '#c9a43c'
-   			},
-   			bg: '#0a1526',
+    			brand: {
+    				DEFAULT: '#f6b01a',
+    				dim: '#c9a43c'
+    			},
+    			'royal-gold': '#C89B3C',
+    			emerald: {
+    				DEFAULT: '#19C6A3',
+    				dim: '#127a68',
+    			},
+    			bg: '#0a1526',
    			surface: '#132036',
    			surface2: '#1a2a44',
   			border: 'hsl(var(--border))',

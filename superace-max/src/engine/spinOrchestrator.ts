@@ -22,6 +22,7 @@ import { buildVisualGrid, buildCascadeVisuals } from './gridBuilder';
 import { sound } from './audioService';
 import { track } from './analytics';
 import { BUY_BONUS_COST_CLASSIC, BUY_BONUS_COST_DELUXE } from '../utils/symbols';
+import { bridge } from './PlatformBridge';
 import type { GameMode } from '../types';
 
 const MULTIPLIER_STEP_DELAY_NORMAL = 1000;
@@ -122,6 +123,11 @@ export async function executeSpin(
     useJackpotStore.getState().incrementBy(jackpotContrib);
     useJackpotStore.getState().setHasIncrement(true);
     deferShakeClear('', 700, activeDelaysRef);
+
+    // Notify parent platform about the bet (postMessage bridge)
+    if (bridge.hasSession()) {
+      bridge.betPlaced(spinCost, `bet_${currentSpinIdx}_${Date.now()}`);
+    }
   }
 
   // ─── API call ────────────────────────────────────────────────────────────
@@ -268,6 +274,11 @@ export async function executeSpin(
     useWalletStore.getState().setLastAddedWin(spinResult.totalWin);
     useWalletStore.getState().setIsBalancePulsing(true);
     deferShakeClear('', 1500, activeDelaysRef);
+
+    // Notify parent platform about the win (postMessage bridge)
+    if (bridge.hasSession()) {
+      bridge.winReceived(spinResult.totalWin, `win_${currentSpinIdx}_${Date.now()}`);
+    }
 
     if (fs.isActive) {
       useGameStore.getState().setFreeSpinsAccumulatedWin(
