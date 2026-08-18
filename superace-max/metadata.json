@@ -1,0 +1,8 @@
+{
+  "name": "SuperAce Deluxe - Royal Casino Slot",
+  "description": "Premium 5-reel cascading slot game featuring Taka currency, VIP Club, Daily Rewards, and Tournament series.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
