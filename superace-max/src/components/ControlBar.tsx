@@ -1,7 +1,7 @@
 import React from 'react';
 import { Settings, RefreshCw, Zap, Minus, Plus, Square } from 'lucide-react';
 
-const BET_STEPS = [0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0];
+const BET_STEPS = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000];
 
 interface ControlBarProps {
   winAmount?: number;
@@ -61,8 +61,8 @@ export const ControlBar: React.FC<ControlBarProps> = React.memo(({
     const currentIdx = BET_STEPS.findIndex((b) => Math.abs(b - currentBet) < 0.01);
     if (currentIdx > 0) {
       onBetChange(BET_STEPS[currentIdx - 1]);
-    } else if (currentBet > 0.2) {
-      onBetChange(Math.max(0.2, Number((currentBet - 0.5).toFixed(2))));
+    } else if (currentBet > 10) {
+      onBetChange(10);
     }
   };
 
@@ -72,7 +72,7 @@ export const ControlBar: React.FC<ControlBarProps> = React.memo(({
     if (currentIdx >= 0 && currentIdx < BET_STEPS.length - 1) {
       onBetChange(BET_STEPS[currentIdx + 1]);
     } else {
-      onBetChange(Math.min(100, Number((currentBet + 1).toFixed(2))));
+      onBetChange(10000);
     }
   };
 
@@ -123,7 +123,7 @@ export const ControlBar: React.FC<ControlBarProps> = React.memo(({
           {/* Bet Minus */}
           <button
             onClick={handleDecreaseBet}
-            disabled={isSpinning || isFreeSpinsActive || currentBet <= 0.2}
+            disabled={isSpinning || isFreeSpinsActive || currentBet <= 10}
             className="w-5 h-5 rounded-full bg-[#1e2e48] border border-[#a07830] flex items-center justify-center text-[#f6d478] active:scale-90 disabled:opacity-30 cursor-pointer"
           >
             <Minus className="w-3 h-3" />

@@ -73,11 +73,12 @@ function cloneGrid(grid: ServerGridCell[][]): ServerGridCell[][] {
 }
 
 function evaluateWays(grid: ServerGridCell[][], bet: number): { waysHits: ServerWaysHit[]; winningCells: Set<string> } {
-  const paying: SymbolType[] = ['A', 'K', 'Q', 'J', 'S'];
+  const paying: SymbolType[] = ['A', 'K', 'Q', 'J', 'S', 'G', 'JK'];
   const hits: ServerWaysHit[] = [];
   const winning = new Set<string>();
 
   for (const sym of paying) {
+    if (sym === 'SC') continue;
     let matchedCols = 0;
     const colCounts: number[] = [];
     const matchedInCols: { col: number; row: number }[][] = [];
@@ -86,7 +87,7 @@ function evaluateWays(grid: ServerGridCell[][], bet: number): { waysHits: Server
       const matching = grid[col]
         .map((cell, row) => ({ cell, row }))
         .filter(({ cell }) =>
-          cell.symbol === sym || cell.isWild || cell.isExpandedWild || cell.symbol === 'G' || cell.symbol === 'JK'
+          cell.symbol === sym || cell.isWild || cell.isExpandedWild || cell.isGoldenJoker
         );
       if (matching.length > 0) {
         matchedCols++;
@@ -101,11 +102,9 @@ function evaluateWays(grid: ServerGridCell[][], bet: number): { waysHits: Server
       const ways = colCounts.reduce((a, c) => a * c, 1);
       const tier = Math.min(matchedCols, 5) as 3 | 4 | 5;
       const baseMult = PAYOUTS[sym][tier] || 0;
-      const payout = bet * baseMult * (ways / 10);
-      const cellKeys: string[] = [];
+      const payout = (bet * baseMult * ways) / 1024;
       matchedInCols.forEach(colCells =>
         colCells.forEach(({ col, row }) => {
-          cellKeys.push(`${col}:${row}`);
           winning.add(`${col}:${row}`);
         })
       );

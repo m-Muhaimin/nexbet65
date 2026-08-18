@@ -152,8 +152,8 @@ export const MULTIPLIER_BASE = [1, 2, 3, 5];
 export const MULTIPLIER_FREE = [2, 4, 6, 10];
 
 // Deluxe Overdrive multiplier ladders (GR-2)
-export const MULTIPLIER_BASE_DELUXE = [1, 2, 3, 5, 15];
-export const MULTIPLIER_FREE_DELUXE = [2, 4, 6, 10, 25];
+export const MULTIPLIER_BASE_DELUXE = [1, 2, 3, 5, 8];
+export const MULTIPLIER_FREE_DELUXE = [2, 4, 6, 10, 15];
 
 // Buy Bonus Costs
 export const BUY_BONUS_COST_CLASSIC = 80;  // 80x bet
