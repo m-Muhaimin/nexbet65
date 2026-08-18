@@ -90,6 +90,9 @@ export async function createGameSessionToken(
   // Hash the token for storage (never store raw token)
   const tokenHash = await sha256(token);
 
+  // Lazy GC: expire old sessions on each creation
+  cleanupExpiredSessions().catch(() => {});
+
   // Persist to DB
   await queryWithRetry(() =>
     prisma.winGameSession.create({
@@ -174,4 +177,24 @@ export async function settleGameSession(sessionId: string): Promise<void> {
       data: { status: "settled" },
     }).catch(() => {}) // ignore if already settled
   );
+}
+
+/**
+ * Expire old sessions that passed their TTL.
+ * Called lazily during session creation to avoid needing a cron job.
+ * Caps at 50 rows per call to bound query time.
+ */
+export async function cleanupExpiredSessions(): Promise<number> {
+  try {
+    const result = await prisma.winGameSession.updateMany({
+      where: {
+        status: "active",
+        expiresAt: { lt: new Date() },
+      },
+      data: { status: "expired" },
+    });
+    return result.count;
+  } catch {
+    return 0;
+  }
 }

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session-server";
 import { recordWalletTransaction } from "@/lib/wallet-server";
 import { executeServerSpin } from "@/lib/superace/engine";
-import { recordSpinStats } from "@/lib/game-state";
+import { recordSpinStats, loadGameState } from "@/lib/game-state";
 import { BUY_BONUS_COST_CLASSIC, BUY_BONUS_COST_DELUXE } from "@/lib/superace/symbols";
 
 const BET_LADDER = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000];
@@ -41,14 +41,22 @@ export async function POST(req: NextRequest) {
   const gameMode = body.gameMode ?? "deluxe";
   const isFreeSpin = body.freeSpinsActive ?? false;
   const isBonusBuy = body.isBonusBuy ?? false;
-  const isDeluxeBonusBuy = body.isDeluxeBonusBuy ?? false;
+  const isDeluxeBonusBuy = (body.isDeluxeBonusBuy ?? false) && gameMode === "deluxe";
   const spinIndex = body.spinIndex ?? 1;
+
+  // Load server-side game state once (used for free spins validation + stats)
+  const serverGameState = await loadGameState(user.username);
 
   // Calculate cost
   const bonusBuyCost = isDeluxeBonusBuy
     ? bet * BUY_BONUS_COST_DELUXE
     : bet * BUY_BONUS_COST_CLASSIC;
-  const spinCost = isBonusBuy ? bonusBuyCost : isFreeSpin ? 0 : bet;
+  let spinCost = isBonusBuy ? bonusBuyCost : isFreeSpin ? 0 : bet;
+
+  // Server-side validation: free spins claim must match actual state
+  if (isFreeSpin && !isBonusBuy && serverGameState.freeSpinsLeft <= 0) {
+    spinCost = bet;
+  }
 
   const spinRef = `superace_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
 
@@ -82,7 +90,6 @@ export async function POST(req: NextRequest) {
       meta: `SuperAce ${gameMode} win`,
     });
     if (!creditResult.ok) {
-      // Log but don't fail — win was computed, credit on retry
       console.error("SuperAce credit failed:", creditResult.error);
     }
   }
@@ -91,9 +98,9 @@ export async function POST(req: NextRequest) {
   const { getWalletSnapshot } = await import("@/lib/wallet-server");
   const snapshot = await getWalletSnapshot(user.username);
 
-  // Persist spin stats (totalBets, totalWins, spinCount, freeSpins, vault, loyalty)
-  const prevFreeSpins = body.freeSpinsRemaining ?? 0;
-  const freeSpinsLeft = body.freeSpinsActive
+  // Persist spin stats using server-side state (never trust client)
+  const prevFreeSpins = serverGameState.freeSpinsLeft;
+  const freeSpinsLeft = isFreeSpin
     ? Math.max(0, prevFreeSpins - 1) + result.freeSpinsAwarded
     : result.freeSpinsAwarded;
 
@@ -107,7 +114,7 @@ export async function POST(req: NextRequest) {
 
   const gameState = await recordSpinStats(user.username, spinCost, result.totalWin, result.spinId, {
     freeSpinsLeft,
-    freeSpinsWin: body.freeSpinsActive ? result.totalWin : 0,
+    freeSpinsWin: isFreeSpin ? result.totalWin : 0,
     vaultDeposit,
     loyaltyPoints: earnedPoints,
   });
