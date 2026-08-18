@@ -14,7 +14,7 @@ export async function middleware(req: NextRequest) {
 
   const isProtected = PROTECTED_PREFIXES.some(
     (p) => pathname === p || pathname.startsWith(p + "/")
-  ) && !pathname.match(/\.(js|css|png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|eot)$/);
+  ) && !pathname.match(/\.(js|css|html|png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|eot)$/);
 
   const isPublicAuth = PUBLIC_ROUTES.some(
     (p) => pathname === p || pathname.startsWith(p + "/")
