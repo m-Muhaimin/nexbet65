@@ -36,7 +36,7 @@ export const GameBackground: React.FC<GameBackgroundProps> = ({ gameMode, isActi
     >
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 mix-blend-overlay filter blur-[1px] scale-105 animate-[bgZoomPan_25s_ease-in-out_infinite]"
-        style={{ backgroundImage: `url('/src/assets/images/golden_empire_bg_1786913063676.jpg')` }}
+        style={{ backgroundImage: `url('./assets/bg/temple.webp')` }}
       />
       <div
         className="absolute inset-0 opacity-20"

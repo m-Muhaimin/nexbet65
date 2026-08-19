@@ -54,7 +54,7 @@ export const ModalManager: React.FC<ModalManagerProps> = ({
   const vault = useVaultStore();
   const boost = useBoostStore();
   const jackpot = useJackpotStore();
-  const defaultBet = wallet.totalBetsPlaced > 0 ? wallet.totalBetsPlaced : 10;
+  const defaultBet = session.currentBet > 0 ? session.currentBet : 10;
 
   const close = (key: 'isBuyBonusOpen' | 'isFreeSpinsIntroOpen' | 'isFreeSpinsSummaryOpen' | 'isPaytableOpen' | 'isHistoryOpen' | 'isSettingsOpen' | 'isBetSelectorOpen' | 'isAutoplayModalOpen' | 'isVaultOpen' | 'isVIPClubOpen' | 'isJackpotOpen' | 'isWithdrawalInterceptOpen' | 'isTournamentOpen' | 'isMenuOpen') =>
     () => useUIStore.getState().setModal(key, false);
@@ -123,7 +123,7 @@ export const ModalManager: React.FC<ModalManagerProps> = ({
         currentBet={defaultBet}
         balance={wallet.balance}
         onSelectBet={(b) => {
-          useWalletStore.getState().setTotalBetsPlaced(b);
+          useSessionStore.getState().setCurrentBet(b);
           saveGameState({ betAmount: b });
         }}
         onClose={close('isBetSelectorOpen')}

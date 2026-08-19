@@ -18,7 +18,7 @@ export const BetSelectorModal: React.FC<BetSelectorModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const quickBets = [0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0];
+  const quickBets = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000];
 
   return (
     <div className="fixed inset-0 bg-black/80 z-[70] flex items-center justify-center p-3 backdrop-blur-sm select-none">

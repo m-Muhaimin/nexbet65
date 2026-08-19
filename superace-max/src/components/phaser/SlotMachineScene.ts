@@ -19,10 +19,10 @@ const SYMBOL_TO_KEY: Record<SymbolType, string> = {
 };
 
 const SYMBOL_TO_PNG: Record<SymbolType, string> = {
-  A: '/assets/symbols/A.png', K: '/assets/symbols/K.png',
-  Q: '/assets/symbols/Q.png', J: '/assets/symbols/J.png',
-  S: '/assets/symbols/clubs.png', G: '/assets/symbols/G.png',
-  JK: '/assets/symbols/JK.png', SC: '/assets/symbols/SC.png',
+  A: './assets/symbols/A.png', K: './assets/symbols/K.png',
+  Q: './assets/symbols/Q.png', J: './assets/symbols/J.png',
+  S: './assets/symbols/clubs.png', G: './assets/symbols/G.png',
+  JK: './assets/symbols/JK.png', SC: './assets/symbols/SC.png',
 };
 
 interface CellSprite {
@@ -62,7 +62,7 @@ export class SlotMachineScene extends Phaser.Scene {
       this.load.image(SYMBOL_TO_KEY[sym], SYMBOL_TO_PNG[sym]);
     }
     for (let i = 0; i <= 7; i++) {
-      this.load.image(`blur_${i}`, `/assets/fx/blur_${String(i).padStart(3, '0')}.png`);
+      this.load.image(`blur_${i}`, `./assets/fx/blur_${String(i).padStart(3, '0')}.png`);
     }
   }
 

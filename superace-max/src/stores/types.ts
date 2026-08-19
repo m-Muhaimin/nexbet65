@@ -181,6 +181,8 @@ export interface SessionState {
   isTurbo: boolean;
   /** Number of auto-spins remaining (0 = manual mode) */
   autoSpinsRemaining: number;
+  /** Current bet amount selected by user (not cumulative) */
+  currentBet: number;
 }
 
 // ─── UI (Modals + Visual Effects) ────────────────────────────────────────────
@@ -305,6 +307,7 @@ export interface SessionActions {
   setIsMuted: (muted: boolean) => void;
   setIsTurbo: (turbo: boolean) => void;
   setAutoSpinsRemaining: (count: number) => void;
+  setCurrentBet: (bet: number) => void;
 }
 
 export interface UIActions {
@@ -394,6 +397,7 @@ export const DEFAULT_SESSION: SessionState = {
   isMuted: false,
   isTurbo: false,
   autoSpinsRemaining: 0,
+  currentBet: 10,
 };
 
 export const DEFAULT_UI: UIState = {

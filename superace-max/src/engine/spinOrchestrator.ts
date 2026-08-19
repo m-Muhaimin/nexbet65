@@ -87,7 +87,7 @@ export async function executeSpin(
   const s = useSessionStore.getState();
   const vault = useVaultStore.getState();
 
-  const defaultBet = w.totalBetsPlaced > 0 ? w.totalBetsPlaced : 10;
+  const defaultBet = s.currentBet > 0 ? s.currentBet : 10;
   const bonusBuyCost = isDeluxeBonusBuy
     ? g.gameMode === 'deluxe' ? defaultBet * BUY_BONUS_COST_DELUXE : defaultBet * BUY_BONUS_COST_CLASSIC
     : defaultBet * BUY_BONUS_COST_CLASSIC;
@@ -118,7 +118,7 @@ export async function executeSpin(
   // Optimistic debit + jackpot contribution (visual only — server handles actual wallet)
   if (!fs.isActive && spinCost > 0) {
     useWalletStore.getState().optimisticDebit(spinCost);
-    useWalletStore.getState().setTotalBetsPlaced(Number((defaultBet + spinCost).toFixed(2)));
+    useWalletStore.getState().setTotalBetsPlaced(Number((w.totalBetsPlaced + spinCost).toFixed(2)));
     const jackpotContrib = spinCost * 0.025;
     useJackpotStore.getState().incrementBy(jackpotContrib);
     useJackpotStore.getState().setHasIncrement(true);

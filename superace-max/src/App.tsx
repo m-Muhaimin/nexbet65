@@ -52,6 +52,7 @@ export default function App() {
         useGameStore.getState().setGameMode(gs.gameMode as GameMode);
         useSessionStore.getState().setIsMuted(gs.isMuted);
         useSessionStore.getState().setIsTurbo(gs.isTurbo);
+        useSessionStore.getState().setCurrentBet(gs.betAmount > 0 ? gs.betAmount : 10);
         useGameStore.getState().setFreeSpinsRemaining(gs.freeSpinsLeft);
         useGameStore.getState().setFreeSpinsTotal(gs.freeSpinsTotal);
         useGameStore.getState().setFreeSpinsAccumulatedWin(gs.freeSpinsWin);
@@ -146,7 +147,7 @@ export default function App() {
     sound.orchestralBigWinFanfare('mega');
   };
 
-  const defaultBet = wallet.totalBetsPlaced > 0 ? wallet.totalBetsPlaced : 10;
+  const defaultBet = session.currentBet > 0 ? session.currentBet : 10;
 
   // ─── Render ──────────────────────────────────────────────────────────────
   return (
@@ -219,7 +220,7 @@ export default function App() {
         freeSpinsTotal={freeSpins.total}
         onSpin={() => handleSpin(false)}
         onBetChange={(b) => {
-          useWalletStore.getState().setTotalBetsPlaced(b);
+          useSessionStore.getState().setCurrentBet(b);
           saveGameState({ betAmount: b });
           sound.buttonClick();
         }}

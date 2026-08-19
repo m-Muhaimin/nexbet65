@@ -7,31 +7,31 @@
  */
 
 const SYMBOL_PATHS = [
-  '/assets/symbols/A.png',
-  '/assets/symbols/K.png',
-  '/assets/symbols/Q.png',
-  '/assets/symbols/J.png',
-  '/assets/symbols/clubs.png',
-  '/assets/symbols/G.png',
-  '/assets/symbols/JK.png',
-  '/assets/symbols/SC.png',
+  './assets/symbols/A.png',
+  './assets/symbols/K.png',
+  './assets/symbols/Q.png',
+  './assets/symbols/J.png',
+  './assets/symbols/clubs.png',
+  './assets/symbols/G.png',
+  './assets/symbols/JK.png',
+  './assets/symbols/SC.png',
 ];
 
 const BG_PATHS = [
-  '/assets/bg/temple.webp',
-  '/assets/bg/temple-thumb.webp',
+  './assets/bg/temple.webp',
+  './assets/bg/temple-thumb.webp',
 ];
 
 const FX_PATHS = [
-  '/assets/fx/blur_000.png',
-  '/assets/fx/blur_001.png',
-  '/assets/fx/blur_002.png',
-  '/assets/fx/blur_003.png',
+  './assets/fx/blur_000.png',
+  './assets/fx/blur_001.png',
+  './assets/fx/blur_002.png',
+  './assets/fx/blur_003.png',
 ];
 
 const UI_PATHS = [
-  '/assets/ui/spin-btn_000.png',
-  '/assets/ui/spin-btn_004.png',
+  './assets/ui/spin-btn_000.png',
+  './assets/ui/spin-btn_004.png',
 ];
 
 function preloadImage(src: string): Promise<void> {

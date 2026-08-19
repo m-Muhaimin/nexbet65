@@ -50,6 +50,7 @@ export interface GameStateSnapshot {
   gameMode: string;
   isMuted: boolean;
   isTurbo: boolean;
+  betAmount: number;
   freeSpinsLeft: number;
   freeSpinsTotal: number;
   freeSpinsWin: number;

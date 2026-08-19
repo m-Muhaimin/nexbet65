@@ -4,14 +4,14 @@ import { ART, RANK } from '../utils/cardVisuals';
 
 // Processed PNG asset paths (from scripts/process-assets.mjs)
 const PNG_ASSETS: Partial<Record<SymbolType, string>> = {
-  A: '/assets/symbols/A.png',
-  K: '/assets/symbols/K.png',
-  Q: '/assets/symbols/Q.png',
-  J: '/assets/symbols/J.png',
-  S: '/assets/symbols/clubs.png',
-  G: '/assets/symbols/G.png',
-  JK: '/assets/symbols/JK.png',
-  SC: '/assets/symbols/SC.png',
+  A: './assets/symbols/A.png',
+  K: './assets/symbols/K.png',
+  Q: './assets/symbols/Q.png',
+  J: './assets/symbols/J.png',
+  S: './assets/symbols/clubs.png',
+  G: './assets/symbols/G.png',
+  JK: './assets/symbols/JK.png',
+  SC: './assets/symbols/SC.png',
 };
 
 interface SymbolArtworkProps {

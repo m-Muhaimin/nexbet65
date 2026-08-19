@@ -51,7 +51,7 @@ const SpinButtonImage: React.FC<{ isSpinning: boolean; canSpin: boolean; spinCos
       aria-label={isSpinning ? 'Spinning' : `Spin for ৳${spinCost}`}
     >
       <img
-        src="/assets/ui/spin-buttons.png"
+        src="./assets/ui/spin-buttons.png"
         alt="Spin"
         className="w-14 h-14 object-contain pointer-events-none"
         draggable={false}

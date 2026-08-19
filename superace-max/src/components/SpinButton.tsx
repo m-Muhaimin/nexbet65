@@ -10,7 +10,7 @@ interface SpinButtonProps {
 }
 
 const TOTAL_FRAMES = 9;
-const FRAME_PATH = '/assets/ui/spin-btn_';
+const FRAME_PATH = './assets/ui/spin-btn_';
 const SPRITE_FRAME_HEIGHT = 86;
 
 export const SpinButton: React.FC<SpinButtonProps> = ({
